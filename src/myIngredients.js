@@ -102,11 +102,7 @@ class MyIngredients extends React.Component {
                 const smallResult = result.common.slice(0, 4);
                 const names = smallResult.map(res => res.food_name);
                 thisInstance.setState({suggestions: names})
-                //slim down to 4 in json tree
-                //add to an existing state var array
             })
-        // .then(result => console.log(result))
-        // .catch(error => console.log('error', error));
 
     }
 
