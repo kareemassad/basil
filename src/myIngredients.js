@@ -127,7 +127,8 @@ class MyIngredients extends React.Component {
                             options={this.state.suggestions}
                             style={{width: 300}}
                             renderInput={params => (
-                                <TextField {...params} label="Combo box" variant="outlined" fullWidth onChange={(event) => this.getSuggestions(event.target.value)}/>
+                                <TextField {...params} label="Combo box" variant="outlined" fullWidth
+                                           onChange={(event) => this.getSuggestions(event.target.value)}/>
                             )}
                         />
 

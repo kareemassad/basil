@@ -45,8 +45,6 @@ class FindRecipes extends React.Component {
                     </div>
                 </div>
             ));
-
-
         } else {
             return (
                 <div>
@@ -54,7 +52,6 @@ class FindRecipes extends React.Component {
                 </div>
             )
         }
-
     }
 
     search() {
