@@ -10,7 +10,7 @@ import {recipeID} from "./firebaseConfig";
 class FindRecipes extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {recipeJSON: [], searchClicked: false, error: null, errorMessage: ""};
+        this.state = {recipeJSON: [], recipeLabel: [], searchClicked: false, error: null, errorMessage: ""};
         this.signOut = this.signOut.bind(this);
         this.search = this.search.bind(this);
         this.searchResults = this.searchResults.bind(this);
@@ -34,15 +34,22 @@ class FindRecipes extends React.Component {
     }
 
     searchResults(){
-        if(this.state.searchClicked){
+        const thisInstance = this;
 
-            return (
-                <div>
-                    <Typography>Clicked recipeList</Typography>
+        if(this.state.searchClicked){
+            console.log(this.state.recipeLabel);
+        return this.state.recipeLabel.map(label=>{
+                
+            <div>    
+                <div key={label + "_div"} style={{display: 'inline-flex'}}>
+                    <Typography key={label + "_text"}>Clicked recipeList {label}</Typography>
                 </div>
+            </div>
+            
+            
+        });   
                 
-                
-            )
+            
         } else {
             return (
                 <div>
@@ -57,7 +64,7 @@ class FindRecipes extends React.Component {
         const thisInstance = this;
         fetch("https://api.edamam.com/search?q=chicken&app_id=" + recipeID + "&app_key=" + recipeAPIKey)
             .then(
-                function(response) {
+                function(response) { 
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         return;
@@ -66,10 +73,15 @@ class FindRecipes extends React.Component {
         // Examine the text in the response
                 response.json().then((data) => {
                     thisInstance.setState({recipeJSON: data});
-                    console.log(data.hits[0]);
+                    let tempLabel = [];
                     data.hits.map(recipe => {
-                        console.log(typeof recipe);
+                        tempLabel.push(recipe.recipe.label);
                     })
+                    console.log("TempLabel: "+ tempLabel);
+                    
+                    thisInstance.setState({recipeLabel: tempLabel});
+                    thisInstance.setState({searchClicked: true});
+
     });
     }
     )
@@ -77,7 +89,6 @@ class FindRecipes extends React.Component {
     .catch(function(err) {
         console.log('Fetch Error :-S', err);
     });
-        this.setState({searchClicked: true});
     }
 
 
@@ -89,7 +100,7 @@ class FindRecipes extends React.Component {
                     spacing={0}
                     direction="column"
                     alignItems="center"
-                    justify="top"
+                    justify="bottom"
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xl={3} align='center'>
@@ -97,30 +108,8 @@ class FindRecipes extends React.Component {
                                 onClick={this.search}>Search</Button>
                         <br/><br/>
                         <this.searchResults/>
-                        
-                    </Grid>
-                    <Grid item xl={3} align='center'>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
-                        <br/><br/>
-                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
-                        <br/><br/>
-                    </Grid>
-                </Grid>
-                <Grid
-                    container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justify="bottom"
-                    style={{minHeight: '100vh'}}
-                >
-                    <Grid item xl={3} align='center'>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
-                        <br/><br/>
-                    </Grid>
-                    <Grid item xl={3} align='center'>
+
+
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
                         <br/><br/>
