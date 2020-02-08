@@ -16,12 +16,12 @@ class Welcome extends React.Component {
 
     componentDidMount() {
         const user = firebase.auth().currentUser;
-        if (user) {
-            const thisProps = this.props;
-            this.setState({welcomeMessage: "Welcome, " + thisProps.location.state.name})
-        } else {
+        if (!user) {
             this.props.history.push("/", {message: "You have been signed out."});
+            return;
         }
+        const thisProps = this.props;
+        this.setState({welcomeMessage: "Welcome, " + thisProps.location.state.name})
     }
 
     getWelcomeMessage() {

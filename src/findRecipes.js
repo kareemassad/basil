@@ -9,6 +9,14 @@ class FindRecipes extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            this.props.history.push("/", {message: "You have been signed out."});
+            return;
+        }
+    }
+
     signOut() {
         firebase.auth().signOut().then(() => {
             this.props.history.push("/", {message: ""});
