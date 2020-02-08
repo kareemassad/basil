@@ -8,13 +8,11 @@ import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
-// import firebase from "./index";
-// import {array} from "prop-types";
 
 class MyIngredients extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {ingredients: [], loaded: false, error: null, suggestions: [], ingredient: "", errorMessage: ""};
+        this.state = {ingredients: [], loaded: false, error: null, suggestions: [], errorMessage: ""};
 
         this.getIngredientsMessage = this.getIngredientsMessage.bind(this);
         this.signOut = this.signOut.bind(this);
@@ -86,8 +84,6 @@ class MyIngredients extends React.Component {
     }
 
     getSuggestions(ingredientInput) {
-        this.setState({ingredient: ingredientInput});
-
         const myHeaders = new Headers();
         myHeaders.append("x-app-id", "6022f84a");
         myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
@@ -103,7 +99,12 @@ class MyIngredients extends React.Component {
         fetch(path + ingredientInput, requestOptions)
             .then(response => response.json())
             .then(result => {
-                const smallResult = result.common.slice(0, 4);
+                let smallResult;
+                if (result.common.length > 4) {
+                    smallResult = result.common.slice(0, 4);
+                } else {
+                    smallResult = result;
+                }
                 const names = smallResult.map(res => res.food_name);
                 thisInstance.setState({suggestions: names})
                 //slim down to 4 in json tree
@@ -114,15 +115,15 @@ class MyIngredients extends React.Component {
 
     }
     
-    onClickFirebase() {
-        console.log("lmao b4");
-        firebase.firestore().collection("users").doc(firebase.auth().currentUser.email).collection("ingredients").doc(this.state.ingredient).update({}).then(() => {
-        console.log("lmao DOPE");  
-            
-        }).catch((error) => {
-            //Error occurred
-            console.log("lmao error");
-        })
+    onClickFirebase(event, value, reason) {
+        if (reason === "reset") {
+            firebase.firestore().collection("users").doc(firebase.auth().currentUser.email).collection("ingredients").doc(value).set({}).then(() => {
+                console.log("lmao DOPE");
+            }).catch((error) => {
+                //Error occurred
+                console.log("ERROR: " + error);
+            })
+        }
     }
 
     render() {
@@ -145,8 +146,9 @@ class MyIngredients extends React.Component {
                             id="combo-box-demo"
                             options={this.state.suggestions}
                             style={{width: 300}}
+                            onInputChange={this.onClickFirebase}
                             renderInput={params => (
-                                <TextField {...params} label="Enter your ingredients:" variant="outlined" onClick={this.onClickFirebase} fullWidth onChange={(event) => this.getSuggestions(event.target.value)}
+                                <TextField {...params} label="Enter your ingredients:" variant="outlined" fullWidth onChange={(event) => this.getSuggestions(event.target.value)}
                             />
                             )}
                         />
