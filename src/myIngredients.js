@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {array} from "prop-types";
 
 class MyIngredients extends React.Component {
     constructor(props) {
