@@ -7,7 +7,6 @@ import CreateAccount from "./createAccount";
 import {firebaseConfig} from "./firebaseConfig";
 import Welcome from "./welcome";
 import MyIngredients from "./myIngredients";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 
 const firebase = require("firebase/app");
@@ -18,12 +17,6 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 export default firebase
-
-export const mediumFontTheme = createMuiTheme({
-    typography: {
-        fontSize: 18,
-    },
-});
 
 if (module.hot) {
     module.hot.accept()
