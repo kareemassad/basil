@@ -34,8 +34,6 @@ class FindRecipes extends React.Component {
     }
 
     searchResults() {
-        const thisInstance = this;
-
         if (this.state.searchClicked) {
             console.log(this.state.recipeLabel);
             return this.state.recipeLabel.map(label => (
@@ -80,7 +78,7 @@ class FindRecipes extends React.Component {
                 }
             )
 
-            .catch(function (err) {
+            .catch((err) => {
                 console.log('Fetch Error :-S', err);
             });
     }
@@ -102,7 +100,6 @@ class FindRecipes extends React.Component {
                                 onClick={this.search}>Search</Button>
                         <br/><br/>
                         <this.searchResults/>
-
 
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
