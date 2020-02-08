@@ -106,11 +106,7 @@ class MyIngredients extends React.Component {
                 const smallResult = result.common.slice(0, 4);
                 const names = smallResult.map(res => res.food_name);
                 thisInstance.setState({suggestions: names})
-                //slim down to 4 in json tree
-                //add to an existing state var array
             })
-        // .then(result => console.log(result))
-        // .catch(error => console.log('error', error));
 
     }
     
@@ -146,8 +142,13 @@ class MyIngredients extends React.Component {
                             options={this.state.suggestions}
                             style={{width: 300}}
                             renderInput={params => (
+<<<<<<< HEAD
                                 <TextField {...params} label="Enter your ingredients:" variant="outlined" onClick={this.onClickFirebase} fullWidth onChange={(event) => this.getSuggestions(event.target.value)}
                             />
+=======
+                                <TextField {...params} label="Combo box" variant="outlined" fullWidth
+                                           onChange={(event) => this.getSuggestions(event.target.value)}/>
+>>>>>>> 662c30b57af508274a488261c97c3d65ad1d757f
                             )}
                         />
 
@@ -157,7 +158,7 @@ class MyIngredients extends React.Component {
                             Ingredients</Button>
                         &nbsp;&nbsp;
                         <Button variant="contained"
-                                onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name})}>Find
+                                onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name, ingredients: this.state.ingredients})}>Find
                             Recipes</Button>
                         <br/><br/>
                         <Button variant="contained"
