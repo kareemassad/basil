@@ -27,6 +27,7 @@ class Welcome extends React.Component {
     getWelcomeMessage() {
         return "Welcome, " + this.props.location.state.name;
     }
+
     signOut() {
         firebase.auth().signOut().then(() => {
             this.props.history.push("/", {message: "You have been signed out."});

@@ -56327,7 +56327,12 @@ function (_React$Component) {
       }), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
         variant: "contained",
         onClick: this.signIn
-      }, "Sign In"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Typography.default, null, this.state.errorMessage))));
+      }, "Sign In"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
+        variant: "contained",
+        onClick: function onClick() {
+          return _this3.props.history.push("/");
+        }
+      }, "Back"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Typography.default, null, this.state.errorMessage))));
     }
   }]);
 
@@ -56498,7 +56503,12 @@ function (_React$Component) {
       }), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
         variant: "contained",
         onClick: this.signUp
-      }, "Create Account"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Typography.default, null, this.state.errorMessage))));
+      }, "Create Account"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
+        variant: "contained",
+        onClick: function onClick() {
+          return _this3.props.history.push("/");
+        }
+      }, "Back"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Typography.default, null, this.state.errorMessage))));
     }
   }]);
 

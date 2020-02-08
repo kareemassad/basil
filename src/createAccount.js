@@ -67,6 +67,8 @@ class CreateAccount extends React.Component {
                         <br/><br/>
                         <Button variant="contained" onClick={this.signUp}>Create Account</Button>
                         <br/><br/>
+                        <Button variant="contained" onClick={() => this.props.history.push("/")}>Back</Button>
+                        <br/><br/>
                         <Typography>{this.state.errorMessage}</Typography>
                     </Grid>
                 </Grid>

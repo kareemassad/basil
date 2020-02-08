@@ -26,7 +26,7 @@ class Login extends React.Component {
                 } else {
                     this.setState({errorMessage: "Error: Unable to retrieve data from Firebase."});
                 }
-            }).catch((error) =>{
+            }).catch((error) => {
                 this.setState({errorMessage: error.message});
             });
         }).catch((error) => {
@@ -53,6 +53,8 @@ class Login extends React.Component {
                                    onChange={(event) => this.setState({password: event.target.value})}/>
                         <br/><br/>
                         <Button variant="contained" onClick={this.signIn}>Sign In</Button>
+                        <br/><br/>
+                        <Button variant="contained" onClick={() => this.props.history.push("/")}>Back</Button>
                         <br/><br/>
                         <Typography>{this.state.errorMessage}</Typography>
                     </Grid>
