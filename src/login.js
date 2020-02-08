@@ -8,8 +8,9 @@ class Login extends React.Component {
 
     render() {
         return (
-            <h2>Create Account</h2>
+            <h2>Sign In</h2>
         )
     }
 }
+
 export default withRouter(Login)

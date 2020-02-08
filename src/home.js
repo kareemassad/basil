@@ -10,23 +10,25 @@ class Home extends React.Component {
 
     render() {
         return (
-        <div>
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{ minHeight: '100vh' }}
-            >
-                <Grid item xs={3} align='center'>
-                    <Button variant="contained" onClick={() => this.props.history.push('/login')}>Sign In</Button>
-                    <br/><br/>
-                    <Button variant="contained" onClick={() => this.props.history.push('/createAccount')}>Create Account</Button>
+            <div>
+                <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
+                    style={{minHeight: '100vh'}}
+                >
+                    <Grid item xs={3} align='center'>
+                        <Button variant="contained" onClick={() => this.props.history.push('/login')}>Sign In</Button>
+                        <br/><br/>
+                        <Button variant="contained" onClick={() => this.props.history.push('/createAccount')}>Create
+                            Account</Button>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </div>
+            </div>
         )
     }
 }
+
 export default withRouter(Home)
