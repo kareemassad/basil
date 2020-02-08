@@ -37,11 +37,14 @@ class FindRecipes extends React.Component {
         const thisInstance = this;
 
         if (this.state.searchClicked) {
-            console.log(this.state.recipeLabel);
+            console.log(this.state.recipeJSON);
             return this.state.recipeLabel.map(label => (
                 <div>
-                    <div key={label + "_div"} style={{display: 'inline-flex'}}>
-                        <Typography key={label + "_text"}>Clicked recipeList {label}</Typography>
+                    <div key={label.label + "_div"} style={{display: 'inline-flex'}}>
+                        <Typography key={label.label + "_text"}>{label.label}  <Button variant="contained" onClick={() => this.props.history.push("/recipeDetails", {name: this.props.location.state.name, recipe: this.state.recipe})}>See Recipe</Button>
+                        <br/></Typography>
+
+
                     </div>
                 </div>
             ));
@@ -57,9 +60,21 @@ class FindRecipes extends React.Component {
 
     }
 
+
     search() {
         const thisInstance = this;
-        fetch("https://api.edamam.com/search?q=chicken&app_id=" + recipeID + "&app_key=" + recipeAPIKey)
+        let url = "https://api.edamam.com/search?q=";
+        this.props.location.state.ingredients.map(ingredient=>{
+            if(ingredient.includes(' ')){
+                ingredient = ingredient.replace(" ", "+");
+            }
+            url = url + ingredient + ",";
+        });
+        url = url.slice(0, url.length-1);
+        url = url + "&";
+        url = url + "app_id=" + recipeID + "&app_key=" + recipeAPIKey;
+        console.log(url);
+        fetch(url)
             .then(
                 function (response) {
                     if (response.status !== 200) {
@@ -69,10 +84,10 @@ class FindRecipes extends React.Component {
 
                     // Examine the text in the response
                     response.json().then((data) => {
-                        thisInstance.setState({recipeJSON: data});
+                        thisInstance.setState({recipeJSON: data.hits});
                         let tempLabel = [];
                         data.hits.map(recipe => {
-                            tempLabel.push(recipe.recipe.label);
+                            tempLabel.push(recipe.recipe);
                         })
                         console.log("TempLabel: " + tempLabel);
 
