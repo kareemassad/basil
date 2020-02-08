@@ -1,11 +1,8 @@
 import React from "react";
 import {withRouter} from "react-router";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from '@material-ui/icons/Delete';
 
 class AddIngredients extends React.Component {
     constructor(props) {
