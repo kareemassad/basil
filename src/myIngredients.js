@@ -1,31 +1,35 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import {withRouter} from "react-router";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import firebase from "./index";
 import Button from "@material-ui/core/Button";
+import {ThemeProvider} from '@material-ui/core/styles';
+import firebase, {mediumFontTheme} from "./index";
 
-class Welcome extends React.Component {
+class MyIngredients extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {welcomeMessage: ""};
+        this.state = {ingredients: [], loaded: false};
 
-        this.getWelcomeMessage = this.getWelcomeMessage.bind(this);
+        this.getIngredientsMessage = this.getIngredientsMessage.bind(this);
         this.signOut = this.signOut.bind(this);
     }
 
     componentDidMount() {
         const user = firebase.auth().currentUser;
-        if (user) {
-            const thisProps = this.props;
-            this.setState({welcomeMessage: "Welcome, " + thisProps.location.state.name})
-        } else {
+        if (!user) {
             this.props.history.push("/", {message: "You have been signed out."});
         }
     }
 
-    getWelcomeMessage() {
-        return "Welcome, " + this.props.location.state.name;
+    getIngredientsMessage() {
+        if (!this.state.loaded) {
+            return "Loading..."
+        } else if (this.state.ingredients.length === 0) {
+            return "You do not have any ingredients yet."
+        } else {
+            return "Ingredients:"
+        }
     }
 
     signOut() {
@@ -48,11 +52,12 @@ class Welcome extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xs={3} align='center'>
-                        <Typography>{this.getWelcomeMessage()}</Typography>
+                        <ThemeProvider theme={mediumFontTheme}>
+                            <Typography>{this.getIngredientsMessage()}</Typography>
+                        </ThemeProvider>
                         <br/><br/>
                         <Button variant="contained"
-                                onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>My
-                            Ingredients</Button>
+                                onClick={() => this.props.history.push("/welcome", {name: this.props.location.state.name})}>Back</Button>
                         <br/><br/>
                         <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
                     </Grid>
@@ -62,4 +67,4 @@ class Welcome extends React.Component {
     }
 }
 
-export default withRouter(Welcome)
+export default withRouter(MyIngredients)
