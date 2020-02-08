@@ -2,3 +2,4 @@
 /.cache
 /src/firebaseConfig.js
 /dist/
+/.vscode
