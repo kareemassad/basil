@@ -56544,6 +56544,8 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _index = _interopRequireDefault(require("./index"));
 
+var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -56579,6 +56581,7 @@ function (_React$Component) {
       welcomeMessage: ""
     };
     _this.getWelcomeMessage = _this.getWelcomeMessage.bind(_assertThisInitialized(_this));
+    _this.signOut = _this.signOut.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -56604,6 +56607,21 @@ function (_React$Component) {
       return "Welcome, " + this.props.location.state.name;
     }
   }, {
+    key: "signOut",
+    value: function signOut() {
+      var _this2 = this;
+
+      _index.default.auth().signOut().then(function () {
+        _this2.props.history.push("/", {
+          message: "You have been signed out."
+        });
+      }).catch(function () {
+        _this2.props.history.push("/", {
+          message: "Error signing out."
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement(_Grid.default, {
@@ -56619,7 +56637,10 @@ function (_React$Component) {
         item: true,
         xs: 3,
         align: "center"
-      }, _react.default.createElement(_Typography.default, null, this.getWelcomeMessage()))));
+      }, _react.default.createElement(_Typography.default, null, this.getWelcomeMessage()), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
+        variant: "contained",
+        onClick: this.signOut
+      }, "Sign Out"))));
     }
   }]);
 
@@ -56629,7 +56650,7 @@ function (_React$Component) {
 var _default = (0, _reactRouter.withRouter)(Welcome);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","@material-ui/core/Grid":"node_modules/@material-ui/core/esm/Grid/index.js","react-router":"node_modules/react-router/esm/react-router.js","@material-ui/core/Typography":"node_modules/@material-ui/core/esm/Typography/index.js","./index":"src/index.js"}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","@material-ui/core/Grid":"node_modules/@material-ui/core/esm/Grid/index.js","react-router":"node_modules/react-router/esm/react-router.js","@material-ui/core/Typography":"node_modules/@material-ui/core/esm/Typography/index.js","./index":"src/index.js","@material-ui/core/Button":"node_modules/@material-ui/core/esm/Button/index.js"}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

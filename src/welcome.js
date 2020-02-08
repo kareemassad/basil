@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
 import firebase from "./index";
+import Button from "@material-ui/core/Button";
 
 class Welcome extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class Welcome extends React.Component {
         this.state = {welcomeMessage: ""};
 
         this.getWelcomeMessage = this.getWelcomeMessage.bind(this);
+        this.signOut = this.signOut.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +27,13 @@ class Welcome extends React.Component {
     getWelcomeMessage() {
         return "Welcome, " + this.props.location.state.name;
     }
+    signOut() {
+        firebase.auth().signOut().then(() => {
+            this.props.history.push("/", {message: "You have been signed out."});
+        }).catch(() => {
+            this.props.history.push("/", {message: "Error signing out."});
+        })
+    }
 
     render() {
         return (
@@ -39,6 +48,8 @@ class Welcome extends React.Component {
                 >
                     <Grid item xs={3} align='center'>
                         <Typography>{this.getWelcomeMessage()}</Typography>
+                        <br/><br/>
+                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
                     </Grid>
                 </Grid>
             </div>
