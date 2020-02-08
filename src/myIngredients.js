@@ -108,9 +108,8 @@ class MyIngredients extends React.Component {
                 const names = smallResult.map(res => res.food_name);
                 thisInstance.setState({suggestions: names})
             })
-
     }
-    
+
     onClickFirebase(event, value, reason) {
         if (reason === "reset") {
             firebase.firestore().collection("users").doc(firebase.auth().currentUser.email).collection("ingredients").doc(value).set({}).then(() => {
@@ -142,8 +141,9 @@ class MyIngredients extends React.Component {
                             style={{width: 300}}
                             onInputChange={this.onClickFirebase}
                             renderInput={params => (
-                                <TextField {...params} label="Enter your ingredients:" variant="outlined" fullWidth onChange={(event) => this.getSuggestions(event.target.value)}
-                            />
+                                <TextField {...params} label="Enter your ingredients:" variant="outlined" fullWidth
+                                           onChange={(event) => this.getSuggestions(event.target.value)}
+                                />
                             )}
                         />
 
