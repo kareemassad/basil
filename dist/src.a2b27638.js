@@ -56623,7 +56623,7 @@ function (_React$Component) {
 
       _index.default.auth().signOut().then(function () {
         _this2.props.history.push("/", {
-          message: "You have been signed out."
+          message: ""
         });
       }).catch(function () {
         _this2.props.history.push("/", {
@@ -57178,29 +57178,55 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MyIngredients).call(this, props));
     _this.state = {
       ingredients: [],
-      loaded: false
+      loaded: false,
+      error: null
     };
     _this.getIngredientsMessage = _this.getIngredientsMessage.bind(_assertThisInitialized(_this));
     _this.signOut = _this.signOut.bind(_assertThisInitialized(_this));
+    _this.listIngredients = _this.listIngredients.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(MyIngredients, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var user = _index.default.auth().currentUser;
 
       if (!user) {
         this.props.history.push("/", {
           message: "You have been signed out."
         });
+        return;
       }
+
+      _index.default.firestore().collection("users").doc(user.email).collection("ingredients").get().then(function (snapshot) {
+        var ingredientList = [];
+        snapshot.forEach(function (doc) {
+          ingredientList.push(doc.id);
+        });
+
+        _this2.setState({
+          ingredients: ingredientList
+        });
+
+        _this2.setState({
+          loaded: true
+        });
+      }).catch(function (error) {
+        _this2.setState({
+          error: error
+        });
+      });
     }
   }, {
     key: "getIngredientsMessage",
     value: function getIngredientsMessage() {
       if (!this.state.loaded) {
         return "Loading...";
+      } else if (this.state.error != null) {
+        return "Error: Failed to load ingredients.";
       } else if (this.state.ingredients.length === 0) {
         return "You do not have any ingredients yet.";
       } else {
@@ -57208,16 +57234,27 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "listIngredients",
+    value: function listIngredients() {
+      return this.state.ingredients.map(function (ingredient) {
+        return _react.default.createElement("div", {
+          key: ingredient + "_div"
+        }, _react.default.createElement("br", null), _react.default.createElement(_Typography.default, {
+          key: ingredient + "_text"
+        }, ingredient));
+      });
+    }
+  }, {
     key: "signOut",
     value: function signOut() {
-      var _this2 = this;
+      var _this3 = this;
 
       _index.default.auth().signOut().then(function () {
-        _this2.props.history.push("/", {
-          message: "You have been signed out."
+        _this3.props.history.push("/", {
+          message: ""
         });
       }).catch(function () {
-        _this2.props.history.push("/", {
+        _this3.props.history.push("/", {
           message: "Error signing out."
         });
       });
@@ -57225,7 +57262,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _react.default.createElement("div", null, _react.default.createElement(_Grid.default, {
         container: true,
@@ -57242,11 +57279,11 @@ function (_React$Component) {
         align: "center"
       }, _react.default.createElement(_styles.ThemeProvider, {
         theme: _index.mediumFontTheme
-      }, _react.default.createElement(_Typography.default, null, this.getIngredientsMessage())), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
+      }, _react.default.createElement(_Typography.default, null, this.getIngredientsMessage())), _react.default.createElement(this.listIngredients, null), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
         variant: "contained",
         onClick: function onClick() {
-          return _this3.props.history.push("/welcome", {
-            name: _this3.props.location.state.name
+          return _this4.props.history.push("/welcome", {
+            name: _this4.props.location.state.name
           });
         }
       }, "Back"), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {

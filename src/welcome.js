@@ -30,7 +30,7 @@ class Welcome extends React.Component {
 
     signOut() {
         firebase.auth().signOut().then(() => {
-            this.props.history.push("/", {message: "You have been signed out."});
+            this.props.history.push("/", {message: ""});
         }).catch(() => {
             this.props.history.push("/", {message: "Error signing out."});
         })

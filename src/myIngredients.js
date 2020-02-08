@@ -9,22 +9,36 @@ import firebase, {mediumFontTheme} from "./index";
 class MyIngredients extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {ingredients: [], loaded: false};
+        this.state = {ingredients: [], loaded: false, error: null};
 
         this.getIngredientsMessage = this.getIngredientsMessage.bind(this);
         this.signOut = this.signOut.bind(this);
+        this.listIngredients = this.listIngredients.bind(this);
     }
 
     componentDidMount() {
         const user = firebase.auth().currentUser;
         if (!user) {
             this.props.history.push("/", {message: "You have been signed out."});
+            return;
         }
+        firebase.firestore().collection("users").doc(user.email).collection("ingredients").get().then((snapshot) => {
+            const ingredientList = [];
+            snapshot.forEach(doc => {
+                ingredientList.push(doc.id)
+            })
+            this.setState({ingredients: ingredientList});
+            this.setState({loaded: true});
+        }).catch((error) => {
+            this.setState({error: error})
+        })
     }
 
     getIngredientsMessage() {
         if (!this.state.loaded) {
             return "Loading..."
+        } else if (this.state.error != null) {
+            return "Error: Failed to load ingredients."
         } else if (this.state.ingredients.length === 0) {
             return "You do not have any ingredients yet."
         } else {
@@ -32,9 +46,18 @@ class MyIngredients extends React.Component {
         }
     }
 
+    listIngredients() {
+        return this.state.ingredients.map(ingredient => (
+            <div key={ingredient + "_div"}>
+                <br/>
+                <Typography key={ingredient + "_text"}>{ingredient}</Typography>
+            </div>
+        ))
+    }
+
     signOut() {
         firebase.auth().signOut().then(() => {
-            this.props.history.push("/", {message: "You have been signed out."});
+            this.props.history.push("/", {message: ""});
         }).catch(() => {
             this.props.history.push("/", {message: "Error signing out."});
         })
@@ -55,6 +78,7 @@ class MyIngredients extends React.Component {
                         <ThemeProvider theme={mediumFontTheme}>
                             <Typography>{this.getIngredientsMessage()}</Typography>
                         </ThemeProvider>
+                        <this.listIngredients/>
                         <br/><br/>
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/welcome", {name: this.props.location.state.name})}>Back</Button>
