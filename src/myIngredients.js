@@ -142,13 +142,8 @@ class MyIngredients extends React.Component {
                             options={this.state.suggestions}
                             style={{width: 300}}
                             renderInput={params => (
-<<<<<<< HEAD
                                 <TextField {...params} label="Enter your ingredients:" variant="outlined" onClick={this.onClickFirebase} fullWidth onChange={(event) => this.getSuggestions(event.target.value)}
                             />
-=======
-                                <TextField {...params} label="Combo box" variant="outlined" fullWidth
-                                           onChange={(event) => this.getSuggestions(event.target.value)}/>
->>>>>>> 662c30b57af508274a488261c97c3d65ad1d757f
                             )}
                         />
 
