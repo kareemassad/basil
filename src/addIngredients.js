@@ -37,6 +37,7 @@ class AddIngredients extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xl={3} align='center'>
+                        
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
                         <br/><br/>

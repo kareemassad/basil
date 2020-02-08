@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from "@material-ui/core/TextField";
 import {withRouter} from "react-router";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -10,12 +11,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 class MyIngredients extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {ingredients: [], loaded: false, error: null, errorMessage: ""};
+        this.state = {ingredients: [], loaded: false, error: null, ingredient: "", errorMessage: ""};
 
         this.getIngredientsMessage = this.getIngredientsMessage.bind(this);
         this.signOut = this.signOut.bind(this);
         this.listIngredients = this.listIngredients.bind(this);
         this.deleteIngredient = this.deleteIngredient.bind(this);
+        this.getSuggestions = this.getSuggestions.bind(this);
     }
 
     componentDidMount() {
@@ -78,6 +80,26 @@ class MyIngredients extends React.Component {
             this.props.history.push("/", {message: "Error signing out."});
         })
     }
+    getSuggestions(ingredient) {
+        const myHeaders = new Headers();
+        myHeaders.append("x-app-id", "6022f84a");
+        myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
+        myHeaders.append("x-remote-user-id", "0");
+
+        const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+        const path = "https://trackapi.nutritionix.com/v2/search/instant?query="
+        fetch(path + ingredient, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            
+        })
+        // .then(result => console.log(result))
+        // .catch(error => console.log('error', error));
+    }
 
     render() {
         return (
@@ -93,10 +115,14 @@ class MyIngredients extends React.Component {
                     <Grid item xl={3} align='center'>
                         <Typography variant="h5">{this.getIngredientsMessage()}</Typography>
                         <this.listIngredients/>
+                        <br></br>
+
+                        <TextField id="field-ingredients" label="Enter your ingredients:"
+                                   onChange={(event) => this.getSuggestions(event.target.value)}/>
+                        
                         <br/><br/>
                         <Button variant="contained"
-                                onClick={() => this.props.history.push("/addIngredients", {name: this.props.location.state.name})}>Add
-                            Ingredients</Button>
+                                onClick={() => this.props.history.push("/addIngredients", {name: this.props.location.state.name})}>Add Ingredients</Button>
                         &nbsp;&nbsp;
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name})}>Find
