@@ -3,12 +3,14 @@ import {withRouter} from "react-router";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
+import Typography from "@material-ui/core/Typography";
 
 class RecipeDetails extends React.Component {
     constructor(props) {
         super(props);
 
         this.signOut = this.signOut.bind(this);
+        this.showRecipeDetails = this.showRecipeDetails.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +30,15 @@ class RecipeDetails extends React.Component {
     }
 
     showRecipeDetails() {
-
+        const recipe = this.props.location.state.recipe;
+        const recipeName = recipe.label + " - " + recipe.source;
+        const recipeTime = "Total time: " + recipe.time + " minutes";
+        return (
+            <div>
+                <Typography>{recipeName}</Typography>
+                <Typography>{recipeTime}</Typography>
+            </div>
+        )
     }
 
     render() {
@@ -43,6 +53,7 @@ class RecipeDetails extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xl={3} align='center'>
+                        <this.showRecipeDetails/>
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name})}>Back</Button>
                         <br/><br/>

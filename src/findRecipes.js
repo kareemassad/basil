@@ -66,9 +66,8 @@ class FindRecipes extends React.Component {
         // Examine the text in the response
                 response.json().then((data) => {
                     thisInstance.setState({recipeJSON: data});
-                    console.log(data.hits[0]);
                     data.hits.map(recipe => {
-                        console.log(typeof recipe);
+                        console.log("A: " + recipe.recipe);
                     })
     });
     }
