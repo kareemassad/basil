@@ -7,6 +7,7 @@ import CreateAccount from "./createAccount";
 import {firebaseConfig} from "./firebaseConfig";
 import Welcome from "./welcome";
 import MyIngredients from "./myIngredients";
+import AddIngredients from "./addIngredients";
 
 
 const firebase = require("firebase/app");
@@ -38,6 +39,9 @@ ReactDOM.render(
                 </Route>
                 <Route path="/ingredients">
                     <MyIngredients/>
+                </Route>
+                <Route path="/addIngredients">
+                    <AddIngredients/>
                 </Route>
                 <Route path="/">
                     <Home/>
