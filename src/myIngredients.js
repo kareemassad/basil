@@ -8,7 +8,8 @@ import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {array} from "prop-types";
+// import firebase from "./index";
+// import {array} from "prop-types";
 
 class MyIngredients extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class MyIngredients extends React.Component {
         this.listIngredients = this.listIngredients.bind(this);
         this.deleteIngredient = this.deleteIngredient.bind(this);
         this.getSuggestions = this.getSuggestions.bind(this);
+
     }
 
     componentDidMount() {
@@ -84,6 +86,8 @@ class MyIngredients extends React.Component {
     }
 
     getSuggestions(ingredientInput) {
+        this.setState({ingredient: ingredientInput});
+
         const myHeaders = new Headers();
         myHeaders.append("x-app-id", "6022f84a");
         myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
@@ -104,6 +108,17 @@ class MyIngredients extends React.Component {
                 thisInstance.setState({suggestions: names})
             })
 
+    }
+    
+    onClickFirebase() {
+        console.log("lmao b4");
+        firebase.firestore().collection("users").doc(firebase.auth().currentUser.email).collection("ingredients").doc(this.state.ingredient).update({}).then(() => {
+        console.log("lmao DOPE");  
+            
+        }).catch((error) => {
+            //Error occurred
+            console.log("lmao error");
+        })
     }
 
     render() {
@@ -127,8 +142,8 @@ class MyIngredients extends React.Component {
                             options={this.state.suggestions}
                             style={{width: 300}}
                             renderInput={params => (
-                                <TextField {...params} label="Combo box" variant="outlined" fullWidth
-                                           onChange={(event) => this.getSuggestions(event.target.value)}/>
+                                <TextField {...params} label="Enter your ingredients:" variant="outlined" onClick={this.onClickFirebase} fullWidth onChange={(event) => this.getSuggestions(event.target.value)}
+                            />
                             )}
                         />
 
