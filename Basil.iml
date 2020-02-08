@@ -4,5 +4,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="@types/react-router-dom" level="application" />
+    <orderEntry type="library" name="@types/parcel-bundler" level="application" />
+    <orderEntry type="library" name="@types/parcel-env" level="application" />
   </component>
 </module>
