@@ -39,14 +39,14 @@ class FindRecipes extends React.Component {
             return this.state.recipeLabel.map(label => (
                 <div>
                     <div key={label.label + "_div"} style={{display: 'inline-flex'}}>
-                        <Typography key={label.label + "_text"}>{label.label} <Button variant="contained"
-                                                                                      onClick={() => this.props.history.push("/recipeDetails", {
-                                                                                          name: this.props.location.state.name,
-                                                                                          recipe: this.state.recipe
-                                                                                      })}>See Recipe</Button>
-                            <br/></Typography>
-
-
+                        <Typography key={label.label + "_text"}>{label.label}
+                            <Button variant="contained"
+                                    onClick={() => this.props.history.push("/recipeDetails", {
+                                        name: this.props.location.state.name,
+                                        recipe: label
+                                    })}>See Recipe</Button>
+                            <br/>
+                        </Typography>
                     </div>
                 </div>
             ));
