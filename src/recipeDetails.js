@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import Typography from "@material-ui/core/Typography";
+import { AwesomeButton } from 'react-awesome-button';
 
 class RecipeDetails extends React.Component {
     constructor(props) {
@@ -99,13 +100,13 @@ class RecipeDetails extends React.Component {
                 >
                     <Grid item xl={3}>
                         <this.showRecipeDetails/>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/findRecipes", {
+                        <AwesomeButton type="secondary" variant="contained"
+                                onPress={() => this.props.history.push("/findRecipes", {
                                     name: this.props.location.state.name,
                                     ingredients: this.props.location.state.ingredients
-                                })}>Back</Button>
+                                })}>Back</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
                         <br/><br/>
                     </Grid>
                 </Grid>

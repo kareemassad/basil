@@ -4,10 +4,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {withRouter} from "react-router";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { AwesomeButton } from 'react-awesome-button';
 
 
 class MyIngredients extends React.Component {
@@ -27,7 +27,6 @@ class MyIngredients extends React.Component {
         this.listIngredients = this.listIngredients.bind(this);
         this.deleteIngredient = this.deleteIngredient.bind(this);
         this.getSuggestions = this.getSuggestions.bind(this);
-        this.toFindRecipes = this.toFindRecipes.bind(this);
     }
 
     componentDidMount() {
@@ -141,10 +140,6 @@ class MyIngredients extends React.Component {
         }
     }
 
-    toFindRecipes() {
-
-    }
-
     render() {
         return (
             <div>
@@ -177,18 +172,18 @@ class MyIngredients extends React.Component {
                         />
 
                         <br/><br/>
-                        <Button variant="contained"
+                        <AwesomeButton type="secondary" variant="contained"
 
-                                onClick={() => this.props.history.push("/findRecipes", {
+                                onPress={() => this.props.history.push("/findRecipes", {
                                     name: this.props.location.state.name,
                                     ingredients: this.state.ingredients
                                 })}>Find
-                            Recipes</Button>
+                            Recipes</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/welcome", {name: this.props.location.state.name})}>Back</Button>
+                        <AwesomeButton type="secondary" variant="contained"
+                                onPress={() => this.props.history.push("/welcome", {name: this.props.location.state.name})}>Back</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
                         <br/><br/>
                         <Typography>{this.state.errorMessage}</Typography>
                     </Grid>
