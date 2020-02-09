@@ -35,7 +35,6 @@ class FindRecipes extends React.Component {
 
     searchResults() {
         if (this.state.searchClicked) {
-            console.log(this.state.recipeJSON);
             return this.state.recipeLabel.map(label => (
                 <div>
                     <div key={label.label + "_div"} style={{display: 'inline-flex'}}>
@@ -89,7 +88,6 @@ class FindRecipes extends React.Component {
                         data.hits.map(recipe => {
                             tempLabel.push(recipe.recipe);
                         })
-                        console.log("TempLabel: " + tempLabel);
 
                         thisInstance.setState({recipeLabel: tempLabel});
                         thisInstance.setState({searchClicked: true});

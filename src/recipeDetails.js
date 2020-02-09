@@ -39,7 +39,11 @@ class RecipeDetails extends React.Component {
                 <div>
                     <Typography>{recipeName}</Typography>
                     <Typography>{recipeTime}</Typography>
-                    <Typography>Ingredients...</Typography>
+                    <br/>
+                    <Typography>Ingredients:</Typography>
+                    {recipe.ingredientLines.map(ingredient => {
+                        return <Typography id={ingredient}>{'\u25cf' + ingredient}</Typography>
+                    })}
                 </div>
             )
         }
