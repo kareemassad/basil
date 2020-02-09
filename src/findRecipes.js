@@ -37,9 +37,9 @@ class FindRecipes extends React.Component {
         if (this.state.searchClicked) {
             return this.state.recipeLabel.map(label => (
                 <div>
-                    <div key={label.label + "_div"} style={{display: 'inline-flex'}}>
+                    <div key={label.label + "_div"} style={{display: 'block'}}>
                         <Typography key={label.label + "_text"}>{label.label}
-                            <Button variant="contained"
+                            <Button color="primary"
                                     onClick={() => this.props.history.push("/recipeDetails", {
                                         name: this.props.location.state.name,
                                         recipe: label,
