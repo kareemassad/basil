@@ -39,7 +39,6 @@ class RecipeDetails extends React.Component {
                 ? [k, ...getKeys(obj[k])]
                 : k);
             const keys = Object.keys(recipe.totalNutrients);
-            console.log(recipe.totalNutrients[keys[0]].label);
 
             return (
                 <div>

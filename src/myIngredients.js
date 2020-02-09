@@ -14,14 +14,21 @@ import "./app.css";
 class MyIngredients extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {ingredients: [], loaded: false, error: null, suggestions: [], errorMessage: ""};
+        this.state = {
+            ingredients: [],
+            loaded: false,
+            error: null,
+            suggestions: [],
+            errorMessage: "",
+            ingredientValue: ""
+        };
 
         this.getIngredientsMessage = this.getIngredientsMessage.bind(this);
         this.signOut = this.signOut.bind(this);
         this.listIngredients = this.listIngredients.bind(this);
         this.deleteIngredient = this.deleteIngredient.bind(this);
         this.getSuggestions = this.getSuggestions.bind(this);
-
+        this.toFindRecipes = this.toFindRecipes.bind(this);
     }
 
     componentDidMount() {
@@ -33,12 +40,12 @@ class MyIngredients extends React.Component {
         firebase.firestore().collection("users").doc(user.email).collection("ingredients").get().then((snapshot) => {
             const ingredientList = [];
             snapshot.forEach(doc => {
-                ingredientList.push(doc.id)
+                ingredientList.push(doc.id);
             })
             this.setState({ingredients: ingredientList});
             this.setState({loaded: true});
         }).catch((error) => {
-            this.setState({error: error})
+            this.setState({error: error});
         })
     }
 
@@ -56,13 +63,12 @@ class MyIngredients extends React.Component {
 
     listIngredients() {
         return this.state.ingredients.map(ingredient => (
-            <div>
-                <div key={ingredient + "_div"} style={{display: 'inline-flex'}}>
-                    <Typography key={ingredient + "_text"}>{ingredient}</Typography>
-                    <IconButton aria-label="delete" onClick={() => this.deleteIngredient(ingredient)}>
-                        <DeleteIcon/>
-                    </IconButton>
-                </div>
+            <div key={ingredient + "_div"} style={{display: 'inline-flex'}}>
+                <Typography key={ingredient + "_text"}>{ingredient}</Typography>
+                <IconButton key={ingredient + "_button"} aria-label="delete"
+                            onClick={() => this.deleteIngredient(ingredient)}>
+                    <DeleteIcon/>
+                </IconButton>
             </div>
         ))
     }
@@ -86,39 +92,58 @@ class MyIngredients extends React.Component {
     }
 
     getSuggestions(ingredientInput) {
-        const myHeaders = new Headers();
-        myHeaders.append("x-app-id", "6022f84a");
-        myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
-        myHeaders.append("x-remote-user-id", "0");
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
+        this.setState({ingredientValue: ingredientInput});
+        if (ingredientInput.length > 0) {
+            const myHeaders = new Headers();
+            myHeaders.append("x-app-id", "6022f84a");
+            myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
+            myHeaders.append("x-remote-user-id", "0");
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
 
-        const path = "https://trackapi.nutritionix.com/v2/search/instant?query="
-        const thisInstance = this;
-        fetch(path + ingredientInput, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                let smallResult;
-                if (result.common.length > 4) {
-                    smallResult = result.common.slice(0, 4);
-                } else {
-                    smallResult = result;
-                }
-                const names = smallResult.map(res => res.food_name);
-                thisInstance.setState({suggestions: names})
-            })
+            const path = "https://trackapi.nutritionix.com/v2/search/instant?query="
+            const thisInstance = this;
+            fetch(path + ingredientInput, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    let smallResult;
+                    if (result.common.length > 4) {
+                        smallResult = result.common.slice(0, 4);
+                    } else {
+                        smallResult = result;
+                    }
+                    if (smallResult.length > 0) {
+                        const names = smallResult.map(res => res.food_name);
+                        thisInstance.setState({suggestions: names})
+                    }
+                })
+        }
     }
 
-    onClickFirebase(event, value, reason) {
-        if (reason === "reset") {
+    onClickFirebase(event, value) {
+        if (value !== null) {
+            if (this.state.ingredients.indexOf(value) >= 0) {
+                this.setState({errorMessage: "Ingredient is already in your list!"});
+                this.setState({ingredientValue: ""});
+                return;
+            }
+            this.setState({errorMessage: ""});
             firebase.firestore().collection("users").doc(firebase.auth().currentUser.email).collection("ingredients").doc(value).set({}).then(() => {
-            }).catch(() => {
-                //Error occurred
+                const ingredients = this.state.ingredients;
+                ingredients.push(value);
+                this.setState({ingredients: ingredients});
+                this.setState({ingredientValue: ""});
+            }).catch((error) => {
+                this.setState({errorMessage: error})
             })
         }
+    }
+
+    toFindRecipes() {
+
     }
 
     render() {
@@ -142,9 +167,11 @@ class MyIngredients extends React.Component {
                             id="combo-box-demo"
                             options={this.state.suggestions}
                             style={{width: 300}}
-                            onInputChange={this.onClickFirebase}
+                            value={this.state.ingredientValue}
+                            onChange={(event, value) => this.onClickFirebase(event, value)}
                             renderInput={params => (
-                                <TextField {...params} label="Enter your ingredients:" variant="outlined" fullWidth
+                                <TextField {...params} label="Enter your ingredients:"
+                                           variant="outlined" fullWidth
                                            onChange={(event) => this.getSuggestions(event.target.value)}
                                 />
                             )}
@@ -153,7 +180,10 @@ class MyIngredients extends React.Component {
                         <br/><br/>
                         <Button variant="contained"
 
-                                onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name, ingredients: this.state.ingredients})}>Find
+                                onClick={() => this.props.history.push("/findRecipes", {
+                                    name: this.props.location.state.name,
+                                    ingredients: this.state.ingredients
+                                })}>Find
                             Recipes</Button>
                         <br/><br/>
                         <Button variant="contained"
