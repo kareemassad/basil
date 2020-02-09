@@ -4,6 +4,8 @@ import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
 import firebase from "./index";
 import Button from "@material-ui/core/Button";
+import "./css/welcome.css";
+
 
 class Welcome extends React.Component {
     constructor(props) {
@@ -47,6 +49,7 @@ class Welcome extends React.Component {
                     justify="center"
                     style={{minHeight: '100vh'}}
                 >
+                    <img src="../img/logo.svg" class="logo" alt="logo"/>
                     <Grid item xs={3} align='center'>
                         <Typography>{this.getWelcomeMessage()}</Typography>
                         <br/><br/>

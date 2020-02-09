@@ -1,0 +1,14 @@
+* {
+    /* padding: 7%; */
+    margin: 0% 2px 0 2px;
+}
+
+body {
+    background-color: aqua;
+}
+
+.logo {
+    box-align: left;
+    height: 40px;
+    width: 80px;
+}

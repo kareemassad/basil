@@ -3,6 +3,13 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
+import {
+    AwesomeButton,
+    AwesomeButtonProgress,
+    AwesomeButtonSocial,
+} from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
+
 
 class Home extends React.Component {
     constructor(props) {
@@ -17,10 +24,15 @@ class Home extends React.Component {
         }
         return "";
     };
+    
+    Button() {
+    return <AwesomeButton type="primary">Button</AwesomeButton>;
+    }
 
     render() {
         return (
             <div>
+                
                 <Grid
                     container
                     spacing={0}
@@ -30,10 +42,13 @@ class Home extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xs={3} align='center'>
-                        <Button variant="contained" onClick={() => this.props.history.push('/login')}>Sign In</Button>
+                        <div class="logo"></div>
+
+                        <AwesomeButton type="primary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={() => this.props.history.push('/createAccount')}>Create
-                            Account</Button>
+
+                        <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/createAccount')}>Create Account</AwesomeButton>
+                        
                         <br/><br/>
                         <Typography>{this.getSignedOutMessage()}</Typography>
                     </Grid>

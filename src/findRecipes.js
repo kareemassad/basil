@@ -6,6 +6,7 @@ import firebase from "./index";
 import {Typography} from "@material-ui/core";
 import {recipeAPIKey} from "./firebaseConfig";
 import {recipeID} from "./firebaseConfig";
+import "./css/app.css";
 
 class FindRecipes extends React.Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class FindRecipes extends React.Component {
         this.signOut = this.signOut.bind(this);
         this.search = this.search.bind(this);
         this.searchResults = this.searchResults.bind(this);
-
+        this.calculateHealth = this.calculateHealth.bind(this);
     }
 
     componentDidMount() {
@@ -34,17 +35,27 @@ class FindRecipes extends React.Component {
     }
 
     searchResults() {
-        const thisInstance = this;
-
         if (this.state.searchClicked) {
-            console.log(this.state.recipeJSON);
             return this.state.recipeLabel.map(label => (
-                <div>
-                    <div key={label.label + "_div"} style={{display: 'inline-flex'}}>
-                        <Typography key={label.label + "_text"}>{label.label}  <Button variant="contained" onClick={() => this.props.history.push("/recipeDetails", {name: this.props.location.state.name, recipe: this.state.recipe})}>See Recipe</Button>
-                        <br/></Typography>
-
-
+                <div class="cell">
+                    <div key={label.label + "_div"} style={{display: 'block'}}>
+                        <Typography key={label.label + "_text"}><span class="recipeTitle">{label.label}</span>
+                            <Button class="recipeButton" color="primary"
+                                    onClick={() => this.props.history.push("/recipeDetails", {
+                                        name: this.props.location.state.name,
+                                        recipe: label,
+                                        ingredients: this.props.location.state.ingredients
+                                    })}>See Recipe</Button>
+                            <br/>
+                        </Typography>
+                    </div>
+                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                        <Typography key={label.calories + "_text"}><span
+                            class="recipeCalories">Calories: {Math.round(label.calories / 10) * 10}</span></Typography>
+                    </div>
+                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                        <Typography key={label.calories + "_text"}><span
+                            class="recipeCalories">Health Rating: {this.calculateHealth(label)}</span></Typography>
                     </div>
                 </div>
             ));
@@ -57,20 +68,38 @@ class FindRecipes extends React.Component {
         }
     }
 
+    calculateHealth(recipe) {
+        let negative = 0, vitamins = 0, rating = 0, count = 0;
+        const keys = Object.keys(recipe.totalNutrients);
+        keys.map(key => {
+            console.log(key);
+            if (key === "ENERC_KCAL" || key === "NA") {
+                negative += recipe.totalDaily[key].quantity
+            } else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1" || key === "FE" || key === "PROCNT") {
+                vitamins += recipe.totalDaily[key].quantity;
+                if (key === "PROCNT") vitamins += recipe.totalDaily[key].quantity;
+                count += 1;
+            }
+
+        });
+        negative *= count;
+        const newRating = (vitamins / negative) * 75;
+        rating = Math.round(newRating) + "%";
+        return rating;
+    }
 
     search() {
         const thisInstance = this;
         let url = "https://api.edamam.com/search?q=";
-        this.props.location.state.ingredients.map(ingredient=>{
-            if(ingredient.includes(' ')){
+        this.props.location.state.ingredients.map(ingredient => {
+            if (ingredient.includes(' ')) {
                 ingredient = ingredient.replace(" ", "+");
             }
             url = url + ingredient + ",";
         });
-        url = url.slice(0, url.length-1);
+        url = url.slice(0, url.length - 1);
         url = url + "&";
         url = url + "app_id=" + recipeID + "&app_key=" + recipeAPIKey;
-        console.log(url);
         fetch(url)
             .then(
                 function (response) {
@@ -86,7 +115,6 @@ class FindRecipes extends React.Component {
                         data.hits.map(recipe => {
                             tempLabel.push(recipe.recipe);
                         })
-                        console.log("TempLabel: " + tempLabel);
 
                         thisInstance.setState({recipeLabel: tempLabel});
                         thisInstance.setState({searchClicked: true});
@@ -95,7 +123,7 @@ class FindRecipes extends React.Component {
                 }
             )
 
-            .catch(function (err) {
+            .catch((err) => {
                 console.log('Fetch Error :-S', err);
             });
     }
@@ -103,7 +131,7 @@ class FindRecipes extends React.Component {
 
     render() {
         return (
-            <div>
+            <div class="container">
                 <Grid
                     container
                     spacing={0}
@@ -113,12 +141,28 @@ class FindRecipes extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xl={3} align='center'>
-                        <Button variant="contained"
-                                onClick={this.search}>Search</Button>
-                        <br/><br/>
-                        <this.searchResults/>
+                        <Grid container
+                              direction="row"
+                              justify="space-between"
+                              alignItems="flex-start">
+                            <Grid item xs>
+                                <div class="landscape">
 
+                                </div>
+                            </Grid>
+                            <Grid item xs>
 
+                                <Button variant="contained"
+                                        onClick={this.search}>Search</Button>
+                                <br/><br/>
+                            </Grid>
+                            <Grid item xs>
+                            </Grid>
+
+                        </Grid>
+                        <div class="container">
+                            <this.searchResults/>
+                        </div>
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
                         <br/><br/>
