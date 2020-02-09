@@ -144,15 +144,16 @@ class FindRecipes extends React.Component {
                                     
                                 </div>
                             </Grid>
-                            <Grid item xs>
+                            
+                        <Grid item xs>
+                        </Grid>
+
+                        </Grid>
+                        <Grid item xs>
 
                         <Button variant="contained"
                                 onClick={this.search}>Search</Button>
                         <br/><br/>
-                        </Grid>
-                        <Grid item xs>
-                        </Grid>
-
                         </Grid>
                         <div class="container">
                             <this.searchResults/>
