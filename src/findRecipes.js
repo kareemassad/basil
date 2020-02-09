@@ -6,6 +6,7 @@ import firebase from "./index";
 import {Typography} from "@material-ui/core";
 import {recipeAPIKey} from "./firebaseConfig";
 import {recipeID} from "./firebaseConfig";
+import "./css/app.css";
 
 class FindRecipes extends React.Component {
     constructor(props) {
@@ -139,9 +140,25 @@ class FindRecipes extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xl={3} align='center'>
+                        <Grid container
+                         direction="row"
+                         justify="space-between"
+                         alignItems="flex-start">
+                            <Grid item xs>
+                                <div class="landscape">
+                                    
+                                </div>
+                            </Grid>
+                            <Grid item xs>
+
                         <Button variant="contained"
                                 onClick={this.search}>Search</Button>
                         <br/><br/>
+                        </Grid>
+                        <Grid item xs>
+                        </Grid>
+
+                        </Grid>
                         <div class="container">
                             <this.searchResults/>
                         </div>
