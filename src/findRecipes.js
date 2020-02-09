@@ -100,9 +100,17 @@ class FindRecipes extends React.Component {
         url = url.slice(0, url.length - 1);
         url = url + "&";
         url = url + "app_id=" + recipeID + "&app_key=" + recipeAPIKey;
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            cache: 'default'
+        })
             .then(
-                function (response) {
+                (response) => {
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         return;
