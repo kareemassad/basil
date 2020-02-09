@@ -6,6 +6,7 @@ import firebase from "./index";
 import {Typography} from "@material-ui/core";
 import {recipeAPIKey} from "./firebaseConfig";
 import {recipeID} from "./firebaseConfig";
+import "./css/app.css";
 
 class FindRecipes extends React.Component {
     constructor(props) {
