@@ -71,16 +71,17 @@ class FindRecipes extends React.Component {
         keys.map(key => {
             console.log(key);
             if (key === "ENERC_KCAL" || key === "NA") {
-                negative += recipe.totalDaily[key]
+                negative += recipe.totalDaily[key].quantity
             }
-            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1" || key === "FE") {
+            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1" || key === "FE" || key === "PROCNT") {
                 vitamins += recipe.totalDaily[key].quantity;
+                if (key === "PROCNT") vitamins += recipe.totalDaily[key].quantity;
                 count += 1;
             }
 
         });
         negative *= count;
-        const newRating = (vitamins / negative) * 100.0;
+        const newRating = (vitamins / negative) * 75;
         rating = Math.round(newRating) + "%";
         return rating;
     }
