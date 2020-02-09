@@ -49,7 +49,10 @@ class FindRecipes extends React.Component {
                         </Typography>
                     </div>
                     <div key={label.calories + "_div"} style={{display: 'block'}} >
-                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Calories: {Math.round(label.calories)}</span></Typography>
+                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Calories: {Math.round(label.calories/10)*10}</span></Typography>
+                    </div>
+                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Health Rating: {this.calculateHealth(label)}</span></Typography>
                     </div>
                 </div>
             ));
@@ -66,7 +69,6 @@ class FindRecipes extends React.Component {
         let calories, vitamins = 0, rating = 0;
         const keys = Object.keys(recipe.totalNutrients);
         keys.map(key => {
-            console.log(key);
             if (key === "ENERC_KCAL") {
                 calories = recipe.totalDaily[key].quantity * 4;
             }
@@ -76,6 +78,7 @@ class FindRecipes extends React.Component {
                 rating = Math.round(newRating) + "%"
             }
         })
+        console.log(rating);
         return rating;
     }
 
