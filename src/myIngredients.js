@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
+import "./app.css";
+
 
 class MyIngredients extends React.Component {
     constructor(props) {
@@ -129,8 +131,9 @@ class MyIngredients extends React.Component {
                     alignItems="center"
                     justify="center"
                     style={{minHeight: '100vh'}}
+                    
                 >
-                    <Grid item xl={3} align='center'>
+                    <Grid item xl={6} align='center'>
                         <Typography variant="h5">{this.getIngredientsMessage()}</Typography>
                         <this.listIngredients/>
                         <br></br>

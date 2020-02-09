@@ -43,8 +43,8 @@ class RecipeDetails extends React.Component {
 
             return (
                 <div>
-                    <Typography>{recipeName}</Typography>
-                    <Typography>{recipeTime}</Typography>
+                    <Typography variant="h4">{recipeName}</Typography>
+                    <Typography >{recipeTime}</Typography>
                     <br/>
                     <Typography>Ingredients:</Typography>
                     {recipe.ingredientLines.map(ingredient => {
