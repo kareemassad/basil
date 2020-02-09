@@ -27,8 +27,7 @@ class RecipeDetails extends React.Component {
             console.log(key);
             if (key === "ENERC_KCAL") {
                 calories = recipe.totalDaily[key].quantity * 4;
-            }
-            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
+            } else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
                 vitamins += recipe.totalDaily[key].quantity;
                 const newRating = (vitamins / calories) * 100.0;
                 this.setState({rating: Math.round(newRating) + "%"})
@@ -57,7 +56,7 @@ class RecipeDetails extends React.Component {
             return (
                 <div>
                     <Typography variant="h4">{recipeName}</Typography>
-                    <Typography >{recipeTime}</Typography>
+                    <Typography>{recipeTime}</Typography>
                     <br/>
                     <Typography>Ingredients:</Typography>
                     {recipe.ingredientLines.map(ingredient => {
@@ -92,7 +91,10 @@ class RecipeDetails extends React.Component {
                     <Grid item xl={3}>
                         <this.showRecipeDetails/>
                         <Button variant="contained"
-                                onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name, ingredients: this.props.location.state.ingredients})}>Back</Button>
+                                onClick={() => this.props.history.push("/findRecipes", {
+                                    name: this.props.location.state.name,
+                                    ingredients: this.props.location.state.ingredients
+                                })}>Back</Button>
                         <br/><br/>
                         <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
                         <br/><br/>

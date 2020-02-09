@@ -9,6 +9,7 @@ import Welcome from "./welcome";
 import MyIngredients from "./myIngredients";
 import FindRecipes from "./findRecipes";
 import RecipeDetails from "./recipeDetails";
+import "./css/home.css";
 
 
 const firebase = require("firebase/app");

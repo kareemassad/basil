@@ -18,7 +18,7 @@ body {
 }
 
 .landscape {
-    background-image: url(./landscape.jpeg);
+    background-image: url(../../img/landscape.jpeg);
     width: 300px;
     max-width: 300px;
     height: 300px;
