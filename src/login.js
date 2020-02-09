@@ -5,6 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import firebase from "./index";
+import { AwesomeButton } from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
+import "./css/login.css";
 
 class Login extends React.Component {
     constructor(props) {
@@ -52,9 +55,9 @@ class Login extends React.Component {
                         <TextField id="field-password" type="password" label="Password"
                                    onChange={(event) => this.setState({password: event.target.value})}/>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signIn}>Sign In</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signIn}>Sign In</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={() => this.props.history.push("/")}>Back</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push("/")}>Back</AwesomeButton>
                         <br/><br/>
                         <Typography>{this.state.errorMessage}</Typography>
                     </Grid>

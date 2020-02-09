@@ -1,14 +1,11 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
-import {
-    AwesomeButton,
-    AwesomeButtonProgress,
-    AwesomeButtonSocial,
-} from 'react-awesome-button';
+import { AwesomeButton } from 'react-awesome-button';
 import "react-awesome-button/dist/styles.css";
+import "circular-std";
+import Anime, {anime} from 'react-anime';
 
 
 class Home extends React.Component {
@@ -39,12 +36,20 @@ class Home extends React.Component {
                     direction="column"
                     alignItems="center"
                     justify="center"
-                    style={{minHeight: '100vh'}}
+                    style={{minHeight: '25vh'}}
                 >
-                    <Grid item xs={3} align='center'>
-                        <div class="logo"></div>
+                    <Grid item xl={3} align='center'>
+                        <div className="logo"></div>
 
-                        <AwesomeButton type="primary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
+                        <br></br>
+                        <Anime delay={anime.stagger(100)} scale={[.1, 2.5]}>
+                            <h1>Basil.</h1>
+                            <br></br>
+                            <h2>A react-based recipe app that doesn't (totally) suck.</h2>
+                        </Anime>
+
+                        <br></br>
+                        <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
                         <br/><br/>
 
                         <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/createAccount')}>Create Account</AwesomeButton>
