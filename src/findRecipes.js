@@ -56,7 +56,7 @@ class FindRecipes extends React.Component {
                     </div>
                     <div key={label.calories + "_div"} style={{display: 'block'}}>
                         <Typography key={label.calories + "_text"}><span
-                            class="recipeCalories">Health Rating: {this.calculateHealth(label)}</span></Typography>
+                            class="recipeCalories">Health Rating: {this.calculateHealth(label)}/5</span></Typography>
                     </div>
                 </div>
             ));
@@ -85,7 +85,17 @@ class FindRecipes extends React.Component {
         });
         negative *= count;
         const newRating = (vitamins / negative) * 75;
-        rating = Math.round(newRating) + "%";
+        if(newRating < 40){
+            rating = 1;
+        } else if (newRating < 80){
+            rating = 2;
+        } else if (newRating < 120){
+            rating = 3;
+        } else if (newRating < 160){
+            rating = 4;
+        } else {
+            rating = 5;
+        }
         return rating;
     }
 
@@ -159,7 +169,9 @@ class FindRecipes extends React.Component {
 
                                 </div>
                             </Grid>
-                            <Grid item xs>
+                            
+                        <Grid item xs>
+                        </Grid>
 
                                 <AwesomeButton type="secondary" variant="contained"
                                         onPress={this.search}>Search</AwesomeButton>
@@ -168,6 +180,9 @@ class FindRecipes extends React.Component {
                             <Grid item xs>
                             </Grid>
 
+                        <Button variant="contained"
+                                onClick={this.search}>Search</Button>
+                        <br/><br/>
                         </Grid>
                         <div class="container">
                             <this.searchResults/>
