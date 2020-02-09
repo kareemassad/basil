@@ -5,6 +5,9 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import firebase from "./index";
+import { AwesomeButton } from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
+import "./css/createAccount.css";
 
 class CreateAccount extends React.Component {
     constructor(props) {
@@ -65,9 +68,9 @@ class CreateAccount extends React.Component {
                         <TextField id="field-confirm" type="password" label="Confirm Password"
                                    onChange={(event) => this.setState({confirmPassword: event.target.value})}/>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signUp}>Create Account</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signUp}>Create Account</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={() => this.props.history.push("/")}>Back</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push("/")}>Back</AwesomeButton>
                         <br/><br/>
                         <Typography>{this.state.errorMessage}</Typography>
                     </Grid>
