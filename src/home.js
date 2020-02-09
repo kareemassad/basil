@@ -42,9 +42,11 @@ class Home extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xs={3} align='center'>
-                        <div class="logo"></div>
+                        <div className="logo"></div>
+                        <Text style={human.largeTitle}>Hello Human!</Text>
 
-                        <AwesomeButton type="primary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
+
+                        <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
                         <br/><br/>
 
                         <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/createAccount')}>Create Account</AwesomeButton>
