@@ -36,10 +36,9 @@ class FindRecipes extends React.Component {
     searchResults() {
         if (this.state.searchClicked) {
             return this.state.recipeLabel.map(label => (
-                <div>
                     <div key={label.label + "_div"} style={{display: 'block'}}>
                         <Typography key={label.label + "_text"}>{label.label}
-                            <Button color="primary"
+                            <Button key={label.label + "_buttons"} color="primary"
                                     onClick={() => this.props.history.push("/recipeDetails", {
                                         name: this.props.location.state.name,
                                         recipe: label,
@@ -48,7 +47,6 @@ class FindRecipes extends React.Component {
                             <br/>
                         </Typography>
                     </div>
-                </div>
             ));
         } else {
             return (
@@ -72,7 +70,6 @@ class FindRecipes extends React.Component {
         url = url.slice(0, url.length - 1);
         url = url + "&";
         url = url + "app_id=" + recipeID + "&app_key=" + recipeAPIKey;
-        console.log(url);
         fetch(url)
             .then(
                 function (response) {

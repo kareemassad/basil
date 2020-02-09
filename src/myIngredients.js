@@ -117,8 +117,8 @@ class MyIngredients extends React.Component {
             })
     }
 
-    onClickFirebase(event, value, reason) {
-        if (reason === "reset" && value !== undefined && value.length > 0) {
+    onClickFirebase(event, value) {
+        if (value !== null) {
             if (this.state.ingredients.indexOf(value) >= 0) {
                 this.setState({errorMessage: "Ingredient is already in your list!"});
                 this.setState({ingredientValue: ""});
@@ -161,7 +161,7 @@ class MyIngredients extends React.Component {
                             options={this.state.suggestions}
                             style={{width: 300}}
                             value={this.state.ingredientValue}
-                            onInputChange={(event, value, reason) => this.onClickFirebase(event, value, reason)}
+                            onChange={(event, value) => this.onClickFirebase(event, value)}
                             renderInput={params => (
                                 <TextField {...params} label="Enter your ingredients:"
                                            variant="outlined" fullWidth
