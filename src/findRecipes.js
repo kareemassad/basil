@@ -38,7 +38,7 @@ class FindRecipes extends React.Component {
         if (this.state.searchClicked) {
             return this.state.recipeLabel.map(label => (
                 <div class="cell">
-                    <div key={label.label + "_div"} style={{display: 'block'}} >
+                    <div key={label.label + "_div"} style={{display: 'block'}}>
                         <Typography key={label.label + "_text"}><span class="recipeTitle">{label.label}</span>
                             <Button class="recipeButton" color="primary"
                                     onClick={() => this.props.history.push("/recipeDetails", {
@@ -49,11 +49,13 @@ class FindRecipes extends React.Component {
                             <br/>
                         </Typography>
                     </div>
-                    <div key={label.calories + "_div"} style={{display: 'block'}} >
-                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Calories: {Math.round(label.calories/10)*10}</span></Typography>
+                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                        <Typography key={label.calories + "_text"}><span
+                            class="recipeCalories">Calories: {Math.round(label.calories / 10) * 10}</span></Typography>
                     </div>
                     <div key={label.calories + "_div"} style={{display: 'block'}}>
-                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Health Rating: {this.calculateHealth(label)}</span></Typography>
+                        <Typography key={label.calories + "_text"}><span
+                            class="recipeCalories">Health Rating: {this.calculateHealth(label)}</span></Typography>
                     </div>
                 </div>
             ));
@@ -67,19 +69,22 @@ class FindRecipes extends React.Component {
     }
 
     calculateHealth(recipe) {
-        let calories, vitamins = 0, rating = 0;
+        let negative = 0, vitamins = 0, rating = 0, count = 0;
         const keys = Object.keys(recipe.totalNutrients);
         keys.map(key => {
-            if (key === "ENERC_KCAL") {
-                calories = recipe.totalDaily[key].quantity * 4;
-            }
-            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
+            console.log(key);
+            if (key === "ENERC_KCAL" || key === "NA") {
+                negative += recipe.totalDaily[key].quantity
+            } else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1" || key === "FE" || key === "PROCNT") {
                 vitamins += recipe.totalDaily[key].quantity;
-                const newRating = (vitamins / calories) * 100.0;
-                rating = Math.round(newRating) + "%"
+                if (key === "PROCNT") vitamins += recipe.totalDaily[key].quantity;
+                count += 1;
             }
-        })
-        console.log(rating);
+
+        });
+        negative *= count;
+        const newRating = (vitamins / negative) * 75;
+        rating = Math.round(newRating) + "%";
         return rating;
     }
 
@@ -137,22 +142,22 @@ class FindRecipes extends React.Component {
                 >
                     <Grid item xl={3} align='center'>
                         <Grid container
-                         direction="row"
-                         justify="space-between"
-                         alignItems="flex-start">
+                              direction="row"
+                              justify="space-between"
+                              alignItems="flex-start">
                             <Grid item xs>
                                 <div class="landscape">
-                                    
+
                                 </div>
                             </Grid>
                             <Grid item xs>
 
-                        <Button variant="contained"
-                                onClick={this.search}>Search</Button>
-                        <br/><br/>
-                        </Grid>
-                        <Grid item xs>
-                        </Grid>
+                                <Button variant="contained"
+                                        onClick={this.search}>Search</Button>
+                                <br/><br/>
+                            </Grid>
+                            <Grid item xs>
+                            </Grid>
 
                         </Grid>
                         <div class="container">
