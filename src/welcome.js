@@ -49,6 +49,7 @@ class Welcome extends React.Component {
                     justify="center"
                     style={{minHeight: '100vh'}}
                 >
+                    <div>
                     <img src="../img/logo.svg" class="logo" alt="logo"/>
                     <Grid item xs={3} align='center'>
                         <Typography>{this.getWelcomeMessage()}</Typography>
@@ -59,6 +60,7 @@ class Welcome extends React.Component {
                         <br/><br/>
                         <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
                     </Grid>
+                    </div>
                 </Grid>
             </div>
         )
