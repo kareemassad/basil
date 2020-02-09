@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import Typography from "@material-ui/core/Typography";
+import {borderColor} from "@material-ui/system";
 
 class RecipeDetails extends React.Component {
     constructor(props) {
@@ -34,6 +35,11 @@ class RecipeDetails extends React.Component {
             const recipe = this.props.location.state.recipe;
             const recipeName = recipe.label + " - " + recipe.source;
             const recipeTime = "Total time: " + recipe.totalTime + " minutes";
+            const getKeys = obj => Object.keys(obj).flatMap(k => Object(obj[k]) === obj[k]
+                ? [k, ...getKeys(obj[k])]
+                : k);
+            const keys = Object.keys(recipe.totalNutrients);
+            console.log(recipe.totalNutrients[keys[0]].label);
 
             return (
                 <div>
@@ -42,8 +48,14 @@ class RecipeDetails extends React.Component {
                     <br/>
                     <Typography>Ingredients:</Typography>
                     {recipe.ingredientLines.map(ingredient => {
-                        return <Typography id={ingredient}>{'\u25cf' + ingredient}</Typography>
+                        return <Typography id={ingredient}>{'\u25cf' + " " + ingredient}</Typography>
                     })}
+                    <br/>
+                    {
+                        keys.map(key => {
+                            return <Typography>{recipe.totalNutrients[key].label + " - " + Math.round(recipe.totalNutrients[key].quantity) + recipe.totalNutrients[key].unit + ((key in recipe.totalDaily) ? (" " + Math.round(recipe.totalDaily[key].quantity) + "%") : "")}</Typography>
+                        })
+                    }
                 </div>
             )
         }
@@ -63,7 +75,7 @@ class RecipeDetails extends React.Component {
                     justify="center"
                     style={{minHeight: '100vh'}}
                 >
-                    <Grid item xl={3} align='center'>
+                    <Grid item xl={3}>
                         <this.showRecipeDetails/>
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name, ingredients: this.props.location.state.ingredients})}>Back</Button>
