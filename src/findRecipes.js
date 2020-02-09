@@ -42,7 +42,7 @@ class FindRecipes extends React.Component {
                 <div class="cell">
                     <div key={label.label + "_div"} style={{ display: 'block' }}>
                         <Typography key={label.label + "_text"}><span class="recipeTitle">{label.label}</span>
-                            <Button class="recipeButton" color="primary"
+                            <Button class="recipeButton" color="primary" style={{ borderBlockColor: 'green' }}
                                 onClick={() => this.props.history.push("/recipeDetails", {
                                     name: this.props.location.state.name,
                                     recipe: label,
@@ -64,7 +64,7 @@ class FindRecipes extends React.Component {
         } else {
             return (
                 <div>
-                    <Typography variant="h4">Click on Search to Show Results</Typography>
+                    <Typography variant="h3">Click on Search to Show Results</Typography>
                 </div>
             )
         }
@@ -162,8 +162,10 @@ class FindRecipes extends React.Component {
                 >
                     <Typography>{this.state.recipesFound}</Typography>
                     <div class="container">
-                        <this.searchResults />
+                        <this.searchResults/>
                     </div>
+                    <br></br>
+                    
                     <AwesomeButton type="primary" variant="contained"
                         onPress={this.search}>Search</AwesomeButton>
                     <br/><br />

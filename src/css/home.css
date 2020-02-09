@@ -31,6 +31,10 @@ h1 {
 h2 {
     font-size: 0.7rem;
 }
+/* .MuiGrid-root {
+    max-width: 100% !important;
+    width: 100% !important;
+} */
 .clearfix::after {
     /* Cleared floated value (was meant as a hacky fix but turns out common) */
     content: "";
