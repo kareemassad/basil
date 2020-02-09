@@ -49,8 +49,18 @@ class RecipeDetails extends React.Component {
         });
         negative *= count;
         const newRating = (vitamins / negative) * 75;
-        rating = Math.round(newRating) + "%";
-        return rating;
+        if (newRating < 40) {
+            rating = 1;
+        } else if (newRating < 80) {
+            rating = 2;
+        } else if (newRating < 120) {
+            rating = 3;
+        } else if (newRating < 160) {
+            rating = 4;
+        } else {
+            rating = 5;
+        }
+        return rating + "/5";
     }
 
     showRecipeDetails() {
@@ -78,6 +88,7 @@ class RecipeDetails extends React.Component {
                             return <Typography>{recipe.totalNutrients[key].label + " - " + Math.round(recipe.totalNutrients[key].quantity) + recipe.totalNutrients[key].unit + ((key in recipe.totalDaily) ? (" " + Math.round(recipe.totalDaily[key].quantity) + "%") : "")}</Typography>
                         })
                     }
+                    <br/>
                     <Typography>Smart Health Rating: {this.state.rating}</Typography>
                 </div>
             )
