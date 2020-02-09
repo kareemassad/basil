@@ -14,7 +14,7 @@ class FindRecipes extends React.Component {
         this.signOut = this.signOut.bind(this);
         this.search = this.search.bind(this);
         this.searchResults = this.searchResults.bind(this);
-
+        this.calculateHealth = this.calculateHealth.bind(this);
     }
 
     componentDidMount() {
@@ -57,6 +57,22 @@ class FindRecipes extends React.Component {
         }
     }
 
+    calculateHealth(recipe) {
+        let calories, vitamins = 0, rating = 0;
+        const keys = Object.keys(recipe.totalNutrients);
+        keys.map(key => {
+            console.log(key);
+            if (key === "ENERC_KCAL") {
+                calories = recipe.totalDaily[key].quantity * 4;
+            }
+            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
+                vitamins += recipe.totalDaily[key].quantity;
+                const newRating = (vitamins / calories) * 100.0;
+                rating = Math.round(newRating) + "%"
+            }
+        })
+        return rating;
+    }
 
     search() {
         const thisInstance = this;
