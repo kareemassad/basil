@@ -63,19 +63,22 @@ class FindRecipes extends React.Component {
     }
 
     calculateHealth(recipe) {
-        let calories, vitamins = 0, rating = 0;
+        let negative = 0, vitamins = 0, rating = 0, count = 0;
         const keys = Object.keys(recipe.totalNutrients);
         keys.map(key => {
             console.log(key);
-            if (key === "ENERC_KCAL") {
-                calories = recipe.totalDaily[key].quantity * 4;
+            if (key === "ENERC_KCAL" || key === "NA") {
+                negative += recipe.totalDaily[key]
             }
-            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
+            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1" || key === "FE") {
                 vitamins += recipe.totalDaily[key].quantity;
-                const newRating = (vitamins / calories) * 100.0;
-                rating = Math.round(newRating) + "%"
+                count += 1;
             }
-        })
+
+        });
+        negative *= count;
+        const newRating = (vitamins / negative) * 100.0;
+        rating = Math.round(newRating) + "%";
         return rating;
     }
 
