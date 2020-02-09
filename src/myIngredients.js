@@ -155,7 +155,7 @@ class MyIngredients extends React.Component {
                     alignItems="center"
                     justify="center"
                     style={{minHeight: '100vh'}}
-                    
+
                 >
                     <Grid item xl={6} align='center'>
                         <Typography variant="h5">{this.getIngredientsMessage()}</Typography>
