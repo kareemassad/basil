@@ -2,11 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
-import {
-    AwesomeButton,
-    AwesomeButtonProgress,
-    AwesomeButtonSocial,
-} from 'react-awesome-button';
+import { AwesomeButton } from 'react-awesome-button';
 import "react-awesome-button/dist/styles.css";
 import "circular-std";
 import Anime, {anime} from 'react-anime';
