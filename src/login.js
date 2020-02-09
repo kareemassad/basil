@@ -55,9 +55,9 @@ class Login extends React.Component {
                         <TextField id="field-password" type="password" label="Password"
                                    onChange={(event) => this.setState({password: event.target.value})}/>
                         <br/><br/>
-                        <AwesomeButton type="secondary" variant="contained" onClick={this.signIn}>Sign In</AwesomeButton>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signIn}>Sign In</AwesomeButton>
                         <br/><br/>
-                        <AwesomeButton type="secondary" variant="contained" onClick={() => this.props.history.push("/")}>Back</AwesomeButton>
+                        <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push("/")}>Back</AwesomeButton>
                         <br/><br/>
                         <Typography>{this.state.errorMessage}</Typography>
                     </Grid>
