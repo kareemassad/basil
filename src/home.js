@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
@@ -43,8 +42,6 @@ class Home extends React.Component {
                 >
                     <Grid item xs={3} align='center'>
                         <div className="logo"></div>
-                        <Text style={human.largeTitle}>Hello Human!</Text>
-
 
                         <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
                         <br/><br/>

@@ -94,8 +94,8 @@ class MyIngredients extends React.Component {
         this.setState({ingredientValue: ingredientInput});
         if (ingredientInput.length > 0) {
             const myHeaders = new Headers();
-            myHeaders.append("x-app-id", "6022f84a");
-            myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
+            myHeaders.append("x-app-id", "8131cd2f");
+            myHeaders.append("x-app-key", "0cd6e124b2fea85246abfbbad7d9d8fc");
             myHeaders.append("x-remote-user-id", "0");
             const requestOptions = {
                 method: 'GET',
