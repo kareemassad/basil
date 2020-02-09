@@ -6,7 +6,6 @@ import firebase from "./index";
 import {Typography} from "@material-ui/core";
 import {recipeAPIKey} from "./firebaseConfig";
 import {recipeID} from "./firebaseConfig";
-import "./app.css";
 
 class FindRecipes extends React.Component {
     constructor(props) {
@@ -37,16 +36,9 @@ class FindRecipes extends React.Component {
     searchResults() {
         if (this.state.searchClicked) {
             return this.state.recipeLabel.map(label => (
-<<<<<<< HEAD
-                <div class="cell">
-                    <div key={label.label + "_div"} style={{display: 'block'}} >
-                        <Typography key={label.label + "_text"}><span class="recipeTitle">{label.label}</span>
-                            <Button class="recipeButton" color="primary"
-=======
                     <div key={label.label + "_div"} style={{display: 'block'}}>
                         <Typography key={label.label + "_text"}>{label.label}
                             <Button key={label.label + "_buttons"} color="primary"
->>>>>>> b034c66b9cf687356df1a1859c00bac3f5e43234
                                     onClick={() => this.props.history.push("/recipeDetails", {
                                         name: this.props.location.state.name,
                                         recipe: label,
@@ -55,13 +47,6 @@ class FindRecipes extends React.Component {
                             <br/>
                         </Typography>
                     </div>
-<<<<<<< HEAD
-                    <div key={label.calories + "_div"} style={{display: 'block'}} >
-                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Calories: {Math.round(label.calories)}</span></Typography>
-                    </div>
-                </div>
-=======
->>>>>>> b034c66b9cf687356df1a1859c00bac3f5e43234
             ));
         } else {
             return (
@@ -132,7 +117,7 @@ class FindRecipes extends React.Component {
 
     render() {
         return (
-            <div class="container">
+            <div>
                 <Grid
                     container
                     spacing={0}
@@ -145,9 +130,8 @@ class FindRecipes extends React.Component {
                         <Button variant="contained"
                                 onClick={this.search}>Search</Button>
                         <br/><br/>
-                        <div class="container">
-                            <this.searchResults/>
-                        </div>
+                        <this.searchResults/>
+
                         <Button variant="contained"
                                 onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
                         <br/><br/>
