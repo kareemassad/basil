@@ -4,7 +4,9 @@ import {withRouter} from "react-router";
 import Typography from "@material-ui/core/Typography";
 import firebase from "./index";
 import Button from "@material-ui/core/Button";
-import "./css/welcome.css";
+import { AwesomeButton } from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
+import "./css/welcome.css"; 
 
 
 class Welcome extends React.Component {
@@ -50,15 +52,15 @@ class Welcome extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <div>
-                    <img src="../img/logo.svg" class="logo" alt="logo"/>
+                    {/* <img src="../../img/logo.svg" className="logo" alt="logo"/> */}
                     <Grid item xs={3} align='center'>
                         <Typography>{this.getWelcomeMessage()}</Typography>
                         <br/><br/>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>My
-                            Ingredients</Button>
+                        <AwesomeButton type="secondary" variant="contained"
+                                onPress={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>My
+                            Ingredients</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
                     </Grid>
                     </div>
                 </Grid>
