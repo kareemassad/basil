@@ -62,7 +62,7 @@ class RecipeDetails extends React.Component {
                     <Grid item xl={3} align='center'>
                         <this.showRecipeDetails/>
                         <Button variant="contained"
-                                onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name})}>Back</Button>
+                                onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name, ingredients: this.props.location.state.ingredients})}>Back</Button>
                         <br/><br/>
                         <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
                         <br/><br/>

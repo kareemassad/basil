@@ -43,7 +43,8 @@ class FindRecipes extends React.Component {
                             <Button variant="contained"
                                     onClick={() => this.props.history.push("/recipeDetails", {
                                         name: this.props.location.state.name,
-                                        recipe: label
+                                        recipe: label,
+                                        ingredients: this.props.location.state.ingredients
                                     })}>See Recipe</Button>
                             <br/>
                         </Typography>
