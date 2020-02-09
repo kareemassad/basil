@@ -17,7 +17,7 @@ html {
 body {
     width: 70%;
     margin: auto;
-    background-color: #BFB8AD;
+    background-color: #E7DFD3;
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
@@ -26,7 +26,7 @@ body {
 
 .clearfix::after {
     /* Cleared floated value (was meant as a hacky fix but turns out common) */
-    content: "";
+    content: ""; 
     clear: both;
     display: table;
 }
@@ -41,16 +41,18 @@ body {
     --button-raise-level: 5px;
     --button-hover-pressure: 2;
     --transform-speed: 0.185s;
-    --button-primary-color: #a9d3e9;
-    --button-primary-color-dark: #58a9d4;
-    --button-primary-color-light: #2e84b2;
-    --button-primary-color-hover: #95c9e4;
-    --button-primary-border: none;
+    --button-primary-color: #fafafa;
+    --button-primary-color-dark: #67cbc3;
+    --button-primary-color-light: #349890;
+    --button-primary-color-hover: #ecf9f8;
+    --button-primary-border: 2px solid #b3e5e1;
+    
     --button-secondary-color: #fafafa;
     --button-secondary-color-dark: #67cbc3;
-    --button-secondary-color-light: #349890;
+    --button-secondary-color-light: #349890; /* font */
     --button-secondary-color-hover: #ecf9f8;
     --button-secondary-border: 2px solid #b3e5e1;
+
     --button-anchor-color: #95d44a;
     --button-anchor-color-dark: #52a934;
     --button-anchor-color-light: #3f8228;
@@ -59,10 +61,11 @@ body {
 }
 
 .logo {
-    background-image: url(../../img/uotthack2020.png);
-    z-index: 1 !important;     
-    width: 300px;
-    max-width: 300px;
-    height: 300px;
-    max-height: 300px;
-}
+    background-image: url(../../img/logo.svg);
+    /* z-index: 1 !important;*/
+    background-size: 500px;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    background-position: top;
+}  
