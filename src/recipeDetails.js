@@ -4,11 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import Typography from "@material-ui/core/Typography";
-import {borderColor} from "@material-ui/system";
 
 class RecipeDetails extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {rating: ""};
 
         this.signOut = this.signOut.bind(this);
         this.showRecipeDetails = this.showRecipeDetails.bind(this);
@@ -20,6 +20,20 @@ class RecipeDetails extends React.Component {
             this.props.history.push("/", {message: "You have been signed out."});
             return;
         }
+        let calories, vitamins = 0;
+        const recipe = this.props.location.state.recipe;
+        const keys = Object.keys(recipe.totalNutrients);
+        keys.map(key => {
+            console.log(key);
+            if (key === "ENERC_KCAL") {
+                calories = recipe.totalDaily[key].quantity * 4;
+            }
+            else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
+                vitamins += recipe.totalDaily[key].quantity;
+                const newRating = (vitamins / calories) * 100.0;
+                this.setState({rating: Math.round(newRating) + "%"})
+            }
+        })
     }
 
     signOut() {
@@ -55,6 +69,7 @@ class RecipeDetails extends React.Component {
                             return <Typography>{recipe.totalNutrients[key].label + " - " + Math.round(recipe.totalNutrients[key].quantity) + recipe.totalNutrients[key].unit + ((key in recipe.totalDaily) ? (" " + Math.round(recipe.totalDaily[key].quantity) + "%") : "")}</Typography>
                         })
                     }
+                    <Typography>Smart Health Rating: {this.state.rating}</Typography>
                 </div>
             )
         }
