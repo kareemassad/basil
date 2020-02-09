@@ -30,16 +30,21 @@ class RecipeDetails extends React.Component {
     }
 
     showRecipeDetails() {
-        const recipe = this.props.location.state.recipe;
-        const recipeName = recipe.label + " - " + recipe.source;
-        const recipeTime = "Total time: " + recipe.time + " minutes";
+        if (this.props.location.state !== undefined) {
+            const recipe = this.props.location.state.recipe;
+            const recipeName = recipe.label + " - " + recipe.source;
+            const recipeTime = "Total time: " + recipe.time + " minutes";
 
+            return (
+                <div>
+                    <Typography>{recipeName}</Typography>
+                    <Typography>{recipeTime}</Typography>
+                    <Typography>Ingredients...</Typography>
+                </div>
+            )
+        }
         return (
-            <div>
-                <Typography>{recipeName}</Typography>
-                <Typography>{recipeTime}</Typography>
-                <Typography>Ingredients...</Typography>
-            </div>
+            <Typography>Loading...</Typography>
         )
     }
 
