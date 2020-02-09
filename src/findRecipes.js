@@ -49,7 +49,10 @@ class FindRecipes extends React.Component {
                         </Typography>
                     </div>
                     <div key={label.calories + "_div"} style={{display: 'block'}} >
-                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Calories: {Math.round(label.calories)}</span></Typography>
+                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Calories: {Math.round(label.calories/10)*10}</span></Typography>
+                    </div>
+                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                        <Typography key={label.calories + "_text"}><span class="recipeCalories">Health Rating: {this.calculateHealth(label)}</span></Typography>
                     </div>
                 </div>
             ));
