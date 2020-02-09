@@ -1,18 +1,19 @@
 import React from "react";
-import {withRouter} from "react-router";
+import { withRouter } from "react-router";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
-import {Typography} from "@material-ui/core";
-import {recipeAPIKey} from "./firebaseConfig";
-import {recipeID} from "./firebaseConfig";
-import "./css/app.css";
+import { Typography } from "@material-ui/core";
+import { recipeAPIKey } from "./firebaseConfig";
+import { recipeID } from "./firebaseConfig";
 import { AwesomeButton } from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
+import "./css/findRecipe.css";
 
 class FindRecipes extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {recipeJSON: [], recipeLabel: [], searchClicked: false, error: null, errorMessage: ""};
+        this.state = { recipeJSON: [], recipeLabel: [], searchClicked: false, error: null, errorMessage: "" };
         this.signOut = this.signOut.bind(this);
         this.search = this.search.bind(this);
         this.searchResults = this.searchResults.bind(this);
@@ -22,16 +23,16 @@ class FindRecipes extends React.Component {
     componentDidMount() {
         const user = firebase.auth().currentUser;
         if (!user) {
-            this.props.history.push("/", {message: "You have been signed out."});
+            this.props.history.push("/", { message: "You have been signed out." });
             return;
         }
     }
 
     signOut() {
         firebase.auth().signOut().then(() => {
-            this.props.history.push("/", {message: ""});
+            this.props.history.push("/", { message: "" });
         }).catch(() => {
-            this.props.history.push("/", {message: "Error signing out."});
+            this.props.history.push("/", { message: "Error signing out." });
         })
     }
 
@@ -39,22 +40,22 @@ class FindRecipes extends React.Component {
         if (this.state.searchClicked) {
             return this.state.recipeLabel.map(label => (
                 <div class="cell">
-                    <div key={label.label + "_div"} style={{display: 'block'}}>
+                    <div key={label.label + "_div"} style={{ display: 'block' }}>
                         <Typography key={label.label + "_text"}><span class="recipeTitle">{label.label}</span>
                             <Button class="recipeButton" color="primary"
-                                    onClick={() => this.props.history.push("/recipeDetails", {
-                                        name: this.props.location.state.name,
-                                        recipe: label,
-                                        ingredients: this.props.location.state.ingredients
-                                    })}>See Recipe</Button>
-                            <br/>
+                                onClick={() => this.props.history.push("/recipeDetails", {
+                                    name: this.props.location.state.name,
+                                    recipe: label,
+                                    ingredients: this.props.location.state.ingredients
+                                })}>See Recipe</Button>
+                            <br />
                         </Typography>
                     </div>
-                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                    <div key={label.calories + "_div"} style={{ display: 'block' }}>
                         <Typography key={label.calories + "_text"}><span
                             class="recipeCalories">Calories: {Math.round(label.calories / 10) * 10}</span></Typography>
                     </div>
-                    <div key={label.calories + "_div"} style={{display: 'block'}}>
+                    <div key={label.calories + "_div"} style={{ display: 'block' }}>
                         <Typography key={label.calories + "_text"}><span
                             class="recipeCalories">Health Rating: {this.calculateHealth(label)}/5</span></Typography>
                     </div>
@@ -129,14 +130,14 @@ class FindRecipes extends React.Component {
 
                     // Examine the text in the response
                     response.json().then((data) => {
-                        thisInstance.setState({recipeJSON: data.hits});
+                        thisInstance.setState({ recipeJSON: data.hits });
                         let tempLabel = [];
                         data.hits.map(recipe => {
                             tempLabel.push(recipe.recipe);
                         })
 
-                        thisInstance.setState({recipeLabel: tempLabel});
-                        thisInstance.setState({searchClicked: true});
+                        thisInstance.setState({ recipeLabel: tempLabel });
+                        thisInstance.setState({ searchClicked: true });
 
                     });
                 }
@@ -157,42 +158,20 @@ class FindRecipes extends React.Component {
                     direction="column"
                     alignItems="center"
                     justify="bottom"
-                    style={{minHeight: '100vh'}}
+                    style={{ minHeight: '50vh' }}
                 >
-                    <Grid item xl={3} align='center'>
-                        <Grid container
-                              direction="row"
-                              justify="space-between"
-                              alignItems="flex-start">
-                            <Grid item xs>
-                                <div class="landscape">
+                    <div class="container">
+                        <this.searchResults />
+                    </div>
+                    <AwesomeButton type="primary" variant="contained"
+                        onPress={this.search}>Search</AwesomeButton>
+                    <br/><br />
 
-                                </div>
-                            </Grid>
-                            
-                        <Grid item xs>
-                        </Grid>
-
-                                <AwesomeButton type="secondary" variant="contained"
-                                        onPress={this.search}>Search</AwesomeButton>
-                                <br/><br/>
-                            </Grid>
-                            <Grid item xs>
-                            </Grid>
-
-                        <Button variant="contained"
-                                onClick={this.search}>Search</Button>
-                        <br/><br/>
-                        </Grid>
-                        <div class="container">
-                            <this.searchResults/>
-                        </div>
-                        <AwesomeButton type="secondary" variant="contained"
-                                onPress={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</AwesomeButton>
-                        <br/><br/>
-                        <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
-                        <br/><br/>
-                    </Grid>
+                    <AwesomeButton type="secondary" variant="contained"
+                        onPress={() => this.props.history.push("/ingredients", { name: this.props.location.state.name })}>Back</AwesomeButton>
+                    <br /><br />
+                    <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
+                    <br /><br />
                 </Grid>
             </div>
         )
