@@ -42,6 +42,8 @@ class Home extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <Grid item xs={3} align='center'>
+                        <div class="logo"></div>
+
                         <AwesomeButton type="primary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
                         <br/><br/>
 
