@@ -7,6 +7,7 @@ import {Typography} from "@material-ui/core";
 import {recipeAPIKey} from "./firebaseConfig";
 import {recipeID} from "./firebaseConfig";
 import "./css/app.css";
+import { AwesomeButton } from 'react-awesome-button';
 
 class FindRecipes extends React.Component {
     constructor(props) {
@@ -172,8 +173,12 @@ class FindRecipes extends React.Component {
                         <Grid item xs>
                         </Grid>
 
-                        </Grid>
-                        <Grid item xs>
+                                <AwesomeButton type="secondary" variant="contained"
+                                        onPress={this.search}>Search</AwesomeButton>
+                                <br/><br/>
+                            </Grid>
+                            <Grid item xs>
+                            </Grid>
 
                         <Button variant="contained"
                                 onClick={this.search}>Search</Button>
@@ -182,10 +187,10 @@ class FindRecipes extends React.Component {
                         <div class="container">
                             <this.searchResults/>
                         </div>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</Button>
+                        <AwesomeButton type="secondary" variant="contained"
+                                onPress={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>Back</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
                         <br/><br/>
                     </Grid>
                 </Grid>

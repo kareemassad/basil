@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import firebase from "./index";
 import Typography from "@material-ui/core/Typography";
+import { AwesomeButton } from 'react-awesome-button';
 
 class RecipeDetails extends React.Component {
     constructor(props) {
@@ -20,19 +21,8 @@ class RecipeDetails extends React.Component {
             this.props.history.push("/", {message: "You have been signed out."});
             return;
         }
-        let calories, vitamins = 0;
-        const recipe = this.props.location.state.recipe;
-        const keys = Object.keys(recipe.totalNutrients);
-        keys.map(key => {
-            console.log(key);
-            if (key === "ENERC_KCAL") {
-                calories = recipe.totalDaily[key].quantity * 4;
-            } else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1") {
-                vitamins += recipe.totalDaily[key].quantity;
-                const newRating = (vitamins / calories) * 100.0;
-                this.setState({rating: Math.round(newRating) + "%"})
-            }
-        })
+        const health = this.calculateHealth(this.props.location.state.recipe);
+        this.setState({rating: health})
     }
 
     signOut() {
@@ -41,6 +31,26 @@ class RecipeDetails extends React.Component {
         }).catch(() => {
             this.props.history.push("/", {message: "Error signing out."});
         })
+    }
+
+    calculateHealth(recipe) {
+        let negative = 0, vitamins = 0, rating = 0, count = 0;
+        const keys = Object.keys(recipe.totalNutrients);
+        keys.map(key => {
+            console.log(key);
+            if (key === "ENERC_KCAL" || key === "NA") {
+                negative += recipe.totalDaily[key].quantity
+            } else if (key === "VITA_RAE" || key === "VITC" || key === "VITD" || key === "VITK1" || key === "FE" || key === "PROCNT") {
+                vitamins += recipe.totalDaily[key].quantity;
+                if (key === "PROCNT") vitamins += recipe.totalDaily[key].quantity;
+                count += 1;
+            }
+
+        });
+        negative *= count;
+        const newRating = (vitamins / negative) * 75;
+        rating = Math.round(newRating) + "%";
+        return rating;
     }
 
     showRecipeDetails() {
@@ -90,13 +100,13 @@ class RecipeDetails extends React.Component {
                 >
                     <Grid item xl={3}>
                         <this.showRecipeDetails/>
-                        <Button variant="contained"
-                                onClick={() => this.props.history.push("/findRecipes", {
+                        <AwesomeButton type="secondary" variant="contained"
+                                onPress={() => this.props.history.push("/findRecipes", {
                                     name: this.props.location.state.name,
                                     ingredients: this.props.location.state.ingredients
-                                })}>Back</Button>
+                                })}>Back</AwesomeButton>
                         <br/><br/>
-                        <Button variant="contained" onClick={this.signOut}>Sign Out</Button>
+                        <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
                         <br/><br/>
                     </Grid>
                 </Grid>
