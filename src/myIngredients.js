@@ -154,6 +154,7 @@ class MyIngredients extends React.Component {
                 >
                     <Grid item xl={6} align='center'>
                         <Typography variant="h5">{this.getIngredientsMessage()}</Typography>
+                        <br/>
                         <this.listIngredients/>
                         <br></br>
 
