@@ -8,6 +8,8 @@ import {
     AwesomeButtonSocial,
 } from 'react-awesome-button';
 import "react-awesome-button/dist/styles.css";
+import "circular-std";
+import Anime, {anime} from 'react-anime';
 
 
 class Home extends React.Component {
@@ -38,11 +40,19 @@ class Home extends React.Component {
                     direction="column"
                     alignItems="center"
                     justify="center"
-                    style={{minHeight: '100vh'}}
+                    style={{minHeight: '25vh'}}
                 >
-                    <Grid item xs={3} align='center'>
+                    <Grid item xl={3} align='center'>
                         <div className="logo"></div>
 
+                        <br></br>
+                        <Anime delay={anime.stagger(100)} scale={[.1, 2.5]}>
+                            <h1>Basil.</h1>
+                            <br></br>
+                            <h2>A react-based recipe app that doesn't (totally) suck.</h2>
+                        </Anime>
+
+                        <br></br>
                         <AwesomeButton type="secondary" variant="contained" onPress={() => this.props.history.push('/login')}>Sign In</AwesomeButton>
                         <br/><br/>
 
