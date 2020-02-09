@@ -13,7 +13,7 @@ import "./css/findRecipe.css";
 class FindRecipes extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { recipeJSON: [], recipeLabel: [], searchClicked: false, error: null, errorMessage: "" };
+        this.state = { recipeJSON: [], recipeLabel: [], searchClicked: false, error: null, errorMessage: "", recipesFound: "" };
         this.signOut = this.signOut.bind(this);
         this.search = this.search.bind(this);
         this.searchResults = this.searchResults.bind(this);
@@ -135,7 +135,7 @@ class FindRecipes extends React.Component {
                         data.hits.map(recipe => {
                             tempLabel.push(recipe.recipe);
                         })
-
+                        thisInstance.setState({recipesFound: "Recipes Found:"});
                         thisInstance.setState({ recipeLabel: tempLabel });
                         thisInstance.setState({ searchClicked: true });
 
@@ -160,6 +160,7 @@ class FindRecipes extends React.Component {
                     justify="bottom"
                     style={{ minHeight: '50vh' }}
                 >
+                    <Typography>{this.state.recipesFound}</Typography>
                     <div class="container">
                         <this.searchResults />
                     </div>
