@@ -149,10 +149,6 @@ class MyIngredients extends React.Component {
 
                         <br/><br/>
                         <Button variant="contained"
-                                onClick={() => this.props.history.push("/addIngredients", {name: this.props.location.state.name})}>Add
-                            Ingredients</Button>
-                        &nbsp;&nbsp;
-                        <Button variant="contained"
 
                                 onClick={() => this.props.history.push("/findRecipes", {name: this.props.location.state.name, ingredients: this.state.ingredients})}>Find
                             Recipes</Button>
