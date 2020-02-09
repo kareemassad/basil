@@ -91,30 +91,34 @@ class MyIngredients extends React.Component {
 
     getSuggestions(ingredientInput) {
         this.setState({ingredientValue: ingredientInput});
-        const myHeaders = new Headers();
-        myHeaders.append("x-app-id", "6022f84a");
-        myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
-        myHeaders.append("x-remote-user-id", "0");
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
+        if (ingredientInput.length > 0) {
+            const myHeaders = new Headers();
+            myHeaders.append("x-app-id", "6022f84a");
+            myHeaders.append("x-app-key", "403303b3cb1edb526069f56c5190bef8");
+            myHeaders.append("x-remote-user-id", "0");
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
 
-        const path = "https://trackapi.nutritionix.com/v2/search/instant?query="
-        const thisInstance = this;
-        fetch(path + ingredientInput, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                let smallResult;
-                if (result.common.length > 4) {
-                    smallResult = result.common.slice(0, 4);
-                } else {
-                    smallResult = result;
-                }
-                const names = smallResult.map(res => res.food_name);
-                thisInstance.setState({suggestions: names})
-            })
+            const path = "https://trackapi.nutritionix.com/v2/search/instant?query="
+            const thisInstance = this;
+            fetch(path + ingredientInput, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    let smallResult;
+                    if (result.common.length > 4) {
+                        smallResult = result.common.slice(0, 4);
+                    } else {
+                        smallResult = result;
+                    }
+                    if (smallResult.length > 0) {
+                        const names = smallResult.map(res => res.food_name);
+                        thisInstance.setState({suggestions: names})
+                    }
+                })
+        }
     }
 
     onClickFirebase(event, value) {
