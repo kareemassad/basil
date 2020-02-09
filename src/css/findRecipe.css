@@ -1,3 +1,8 @@
+h3 {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
 .aws-btn {
 
     /* background-color: buttonface; */
@@ -28,7 +33,6 @@
     --button-anchor-color-hover: #89cf35;
     --button-anchor-border: 2px solid #5bbd3a;
 }
-
 .cell {
     display: flex;
     flex-direction: column;
@@ -42,13 +46,14 @@
 .container {
     width: 70%;
     margin: auto;
+    align-self: center;
 
 }
 
-.MuiGrid-root {
+/* .MuiGrid-root {
     max-width: 100% !important;
     width: 100% !important;
-}
+} */
 
 .recipeTitle {
     float: left;

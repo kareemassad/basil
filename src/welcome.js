@@ -52,16 +52,21 @@ class Welcome extends React.Component {
                     style={{minHeight: '100vh'}}
                 >
                     <div>
-                    {/* <img src="../../img/logo.svg" className="logo" alt="logo"/> */}
-                    <Grid item xs={3} align='center'>
                         <Typography>{this.getWelcomeMessage()}</Typography>
-                        <br/><br/>
+                        <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        justify="center"
+                        style={{minHeight: '25vh'}}
+                        >
                         <AwesomeButton type="secondary" variant="contained"
-                                onPress={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>My
-                            Ingredients</AwesomeButton>
+                                onPress={() => this.props.history.push("/ingredients", {name: this.props.location.state.name})}>My Ingredients</AwesomeButton>
                         <br/><br/>
                         <AwesomeButton type="secondary" variant="contained" onPress={this.signOut}>Sign Out</AwesomeButton>
-                    </Grid>
+                        </Grid>
+                    
                     </div>
                 </Grid>
             </div>
